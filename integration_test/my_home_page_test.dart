@@ -13,8 +13,8 @@ void main() {
         .pumpWidget(TestUtil.pumpWidgetWithShellApp(const HomeScreen()));
     await tester.pumpAndSettle();
 
-    expect(find.widgetWithText(AppBar, 'Survey Flutter testing'),
-        findsOneWidget);
+    expect(
+        find.widgetWithText(AppBar, 'Survey Flutter testing'), findsOneWidget);
     expect(find.text('This is only for testing'), findsOneWidget);
   });
 }
