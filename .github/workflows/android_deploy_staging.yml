@@ -46,6 +46,6 @@ jobs:
         uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
         with:
           appId: ${{ secrets.FIREBASE_ANDROID_APP_ID_STAGING }}
-          serviceCredentialsFileContent: ${{ secrets.FIREBASE_DISTRIBUTION_CREDENTIAL_JSON }}
+          serviceCredentialsFileContent: ${{ secrets.FIREBASE_STAGING_DISTRIBUTION_CREDENTIAL_JSON }}
           groups: ${{ vars.FIREBASE_DISTRIBUTION_TESTER_GROUPS }}
           file: build/app/outputs/flutter-apk/app-staging-debug.apk
