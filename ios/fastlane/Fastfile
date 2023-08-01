@@ -56,7 +56,7 @@ platform :ios do
   # Testflight
 
   desc 'Build and upload Staging app to Test Flight'
-  lane :build_and_upload_staging_to_testflight_app do
+  lane :build_and_upload_staging_to_testflight do
     set_app_version
     bump_build
     builder.build_app_store(
@@ -65,11 +65,7 @@ platform :ios do
       Constants.BUNDLE_ID_STAGING,
       false
     )
-    upload_build_to_testflight
-  end
-
-  desc 'upload develop build to Test Flight'
-  private_lane :upload_build_to_testflight do
+    set_appstore_connect_api_key
     distribution_manager.upload_to_testflight(
       product_name: Constants.PRODUCT_NAME_STAGING,
       bundle_identifier: Constants.BUNDLE_ID_STAGING
