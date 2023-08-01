@@ -56,7 +56,7 @@ platform :ios do
   # Testflight
 
   desc 'Build and upload Staging app to Test Flight'
-  lane :build_and_upload_testflight_app do
+  lane :build_and_upload_staging_to_testflight_app do
     set_app_version
     bump_build
     builder.build_app_store(
@@ -138,10 +138,10 @@ platform :ios do
     end
   end
 
-  desc 'set build number with number of commits'
+  desc 'set build number'
   private_lane :bump_build do
     increment_build_number(
-      build_number: number_of_commits,
+      build_number: Environments.BUILD_NUMBER,
       xcodeproj: Constants.PROJECT_PATH
     )
   end
@@ -153,6 +153,16 @@ platform :ios do
       firebase_app_id: options[:firebase_app_id],
       tester_groups: options[:tester_groups],
       notes: ""
+    )
+  end
+
+  desc 'set App Store Connect API Key'
+  private_lane :set_appstore_connect_api_key do
+    app_store_connect_api_key(
+      key_id: Environments.APPSTORE_CONNECT_API_KEY_ID,
+      issuer_id: Environments.APPSTORE_CONNECT_ISSUER_ID,
+      key_content: Environments.APPSTORE_CONNECT_API_KEY_CONTENT,
+      is_key_content_base64: true
     )
   end
 end

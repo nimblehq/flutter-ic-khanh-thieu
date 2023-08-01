@@ -33,6 +33,8 @@ DerivedData/
 fastlane/README.md
 fastlane/report.xml
 .envfile
+.bundle
+vendor/bundle
 
 # Exceptions to above rules.
 !default.mode1v3
