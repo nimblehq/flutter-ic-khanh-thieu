@@ -66,7 +66,7 @@ jobs:
 
     - name: Build and Deploy to TestFlight
       env:
-        BUILD_NUMBER: ${{ secrets.GITHUB_RUN_NUMBER }}
+        BUILD_NUMBER: ${{ github.run_number }}
         TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
         APPSTORE_CONNECT_API_KEY_ID: ${{ secrets.APPSTORE_CONNECT_API_KEY_ID }}
         APPSTORE_CONNECT_ISSUER_ID: ${{ secrets.APPSTORE_CONNECT_ISSUER_ID }}
