@@ -1,8 +1,9 @@
 name: Android - Deploy Production build to Firebase
 
 on:
-  pull_request:
-    types: [ opened, synchronize, edited, reopened ]
+  push:
+    branches:
+      - main
 
 jobs:
   build_and_deploy_android:
