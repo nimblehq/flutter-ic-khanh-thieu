@@ -1,13 +1,8 @@
 name: iOS - Deploy Staging build to TestFlight
 on:
-  # DELETE
-  workflow_dispatch:
-  pull_request:
-    types: [ opened, synchronize, edited, reopened ]
-  # Uncomment
-  # push:
-  #   branches:
-  #     - develop
+  push:
+    branches:
+      - develop
 
 jobs:
   build_and_upload_staging_to_testflight:
