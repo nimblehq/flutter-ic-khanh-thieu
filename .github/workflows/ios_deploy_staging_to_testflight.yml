@@ -1,0 +1,69 @@
+name: iOS - Deploy Staging build to TestFlight
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build_and_upload_staging_to_testflight:
+    name: Build and upload iOS Staging build to TestFlight
+    runs-on: macOS-latest
+    steps:
+    - name: Check out
+      uses: actions/checkout@v3
+
+    - name: Install SSH key
+      uses: webfactory/ssh-agent@v0.8.0
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Set up Flutter environment
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+        flutter-version: '3.10.5'
+    - run: flutter --version
+
+    - name: Set up deployment environment
+      env:
+        ENV_STAGING: ${{ secrets.ENV_STAGING }}
+      run: echo "$ENV_STAGING" > .env.staging
+
+    - name: Get Flutter dependencies
+      run: flutter pub get
+
+    - name: Run code generator
+      run: flutter packages pub run build_runner build --delete-conflicting-outputs
+
+    - name: Cache Ruby gems
+      uses: actions/cache@v3
+      id: bunlderCache
+      with:
+        path: ios/vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: ${{ runner.os }}-gems-
+
+    - name: Cache Pods
+      uses: actions/cache@v3
+      id: cocoapodCache
+      with:
+        path: ios/Pods
+        key: ${{ runner.os }}-pods-${{ hashFiles('**/Podfile.lock') }}
+        restore-keys: ${{ runner.os }}-pods-
+
+    - name: Install iOS dependencies
+      run: cd ios && bundle install --path vendor/bundle && bundle exec pod install
+
+    - name: Sync certificates and profiles
+      env:
+        MATCH_PASSWORD: ${{ secrets.MATCH_PASSPHRASE }}
+      run: cd ios && bundle exec fastlane sync_appstore_staging_signing
+
+    - name: Build and Deploy to TestFlight
+      env:
+        BUILD_NUMBER: ${{ github.run_number }}
+        TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        APPSTORE_CONNECT_API_KEY_ID: ${{ secrets.APPSTORE_CONNECT_API_KEY_ID }}
+        APPSTORE_CONNECT_ISSUER_ID: ${{ secrets.APPSTORE_CONNECT_ISSUER_ID }}
+        APPSTORE_CONNECT_API_KEY_CONTENT: ${{ secrets.APPSTORE_CONNECT_API_KEY_CONTENT }}
+      run: cd ios && bundle exec fastlane build_and_upload_staging_to_testflight

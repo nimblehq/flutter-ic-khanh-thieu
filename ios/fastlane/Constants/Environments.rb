@@ -3,6 +3,10 @@ class Environments
     ENV['CI']
   end
 
+  def self.BUILD_NUMBER
+    ENV["BUILD_NUMBER"]
+  end
+
   def self.MANUAL_VERSION
     ENV['MANUAL_VERSION']
   end
@@ -13,6 +17,18 @@ class Environments
 
   def self.TEAM_ID
     ENV['TEAM_ID']
+  end
+
+  def self.APPSTORE_CONNECT_API_KEY_ID
+    ENV['APPSTORE_CONNECT_API_KEY_ID']
+  end
+
+  def self.APPSTORE_CONNECT_ISSUER_ID
+    ENV['APPSTORE_CONNECT_ISSUER_ID']
+  end
+
+  def self.APPSTORE_CONNECT_API_KEY_CONTENT
+    ENV['APPSTORE_CONNECT_API_KEY_CONTENT']
   end
 
   #################

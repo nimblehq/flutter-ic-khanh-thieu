@@ -101,7 +101,6 @@
 				4CECC584E22FC1C9758915C4 /* Pods-Runner.production release.xcconfig */,
 				CD053C9523AC5A7DD2AB8FAD /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -646,7 +645,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = co.nimblehq.khanhthieu.survey.staging;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "match AdHoc co.nimblehq.khanhthieu.survey.staging";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore co.nimblehq.khanhthieu.survey.staging";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "match AppStore co.nimblehq.khanhthieu.survey.staging";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
