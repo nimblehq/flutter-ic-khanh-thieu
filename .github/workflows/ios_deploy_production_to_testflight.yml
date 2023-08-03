@@ -1,11 +1,8 @@
 name: iOS - Deploy Production build to TestFlight
 on:
-  workflow_dispatch:
-  pull_request:
-    types: [ opened, synchronize, edited, reopened ]
-  # push:
-  #   branches:
-  #     - main
+  push:
+    branches:
+      - main
 
 jobs:
   build_and_upload_production_to_testflight:
