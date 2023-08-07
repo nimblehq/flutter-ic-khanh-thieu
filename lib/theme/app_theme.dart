@@ -16,5 +16,8 @@ class AppTheme {
             fontWeight: FontWeight.bold,
           ),
         ),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.white,
+        ),
       );
 }
