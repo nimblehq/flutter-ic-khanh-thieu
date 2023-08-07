@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:survey_flutter/screens/login/login_form.dart';
+
+// TODO: Update to `/login`
+const routePathLoginScreen = '/';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({Key? key}) : super(key: key);
+  @override
+  State<StatefulWidget> createState() => _LoginSrceenState();
+}
+
+class _LoginSrceenState extends State<LoginScreen> {
+  late final _gradientOverlay = Container(
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Colors.black.withOpacity(0.2),
+          Colors.black,
+        ],
+      ),
+    ),
+  );
+
+  late final _loginForm = const Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: 24.0,
+    ),
+    child: LoginForm(),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        alignment: AlignmentDirectional.center,
+        fit: StackFit.expand,
+        children: [
+          _gradientOverlay,
+          _loginForm,
+        ],
+      ),
+    );
+  }
+}
