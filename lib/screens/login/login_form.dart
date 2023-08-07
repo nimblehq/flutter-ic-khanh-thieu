@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_flutter/screens/widgets/primary_button_style.dart';
 import 'package:survey_flutter/screens/widgets/primary_text_field_decoration.dart';
 
@@ -12,12 +13,13 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
 
   TextTheme get _textTheme => Theme.of(context).textTheme;
+  AppLocalizations get _localizations => AppLocalizations.of(context)!;
 
   TextFormField get _emailTextField => TextFormField(
         keyboardType: TextInputType.emailAddress,
         autocorrect: false,
         decoration: PrimaryTextFieldDecoration(
-          hintText: 'Email',
+          hintText: _localizations.emailInputHint,
           hintTextStyle: _textTheme.bodyMedium,
         ),
         style: _textTheme.bodyMedium,
@@ -27,7 +29,7 @@ class _LoginFormState extends State<LoginForm> {
         autocorrect: false,
         obscureText: true,
         decoration: PrimaryTextFieldDecoration(
-          hintText: 'Password',
+          hintText: _localizations.passwordInputHint,
           hintTextStyle: _textTheme.bodyMedium,
         ),
         style: _textTheme.bodyMedium,
@@ -36,7 +38,7 @@ class _LoginFormState extends State<LoginForm> {
   ElevatedButton get _loginButton => ElevatedButton(
         style: PrimaryButtonStyle(hintTextStyle: _textTheme.labelMedium),
         onPressed: _submit,
-        child: const Text('Log in'),
+        child: Text(_localizations.loginButton),
       );
 
   void _submit() {

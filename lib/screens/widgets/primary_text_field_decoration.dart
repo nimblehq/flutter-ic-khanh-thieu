@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:survey_flutter/theme/app_constants.dart';
 
 class PrimaryTextFieldDecoration extends InputDecoration {
   PrimaryTextFieldDecoration(
@@ -6,7 +7,7 @@ class PrimaryTextFieldDecoration extends InputDecoration {
       : super(
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(Metrics.defaultBorderRadius),
           ),
           fillColor: Colors.white24,
           filled: true,

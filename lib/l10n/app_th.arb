@@ -1,3 +1,5 @@
 {
-  "hello": "สวัสดี"
+    "emailInputHint": "",
+    "passwordInputHint": "",
+    "loginButton": ""
 }
