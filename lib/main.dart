@@ -25,7 +25,9 @@ class MyApp extends StatelessWidget {
       ),
       GoRoute(
         path: routePathLoginScreen,
-        builder: (_, __) => const LoginScreen(),
+        pageBuilder: (_, __) => const NoTransitionPage<void>(
+          child: LoginScreen(),
+        ),
       ),
     ],
   );

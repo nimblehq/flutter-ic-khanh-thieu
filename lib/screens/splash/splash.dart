@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
+import 'package:survey_flutter/screens/login/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -25,7 +27,7 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(builder: (_, constraints) {
+      body: LayoutBuilder(builder: (_, __) {
         return Stack(
           alignment: AlignmentDirectional.center,
           fit: StackFit.expand,
@@ -43,10 +45,14 @@ class SplashScreenState extends State<SplashScreen> {
 
   Widget _buildAnimatedLogo() {
     return AnimatedOpacity(
-        opacity: _isLogoVisible ? 1.0 : 0.0,
-        duration: const Duration(milliseconds: 500),
-        child: Image.asset(
-          Assets.images.splashLogoWhite.path,
-        ));
+      opacity: _isLogoVisible ? 1.0 : 0.0,
+      duration: const Duration(milliseconds: 500),
+      child: Image.asset(
+        Assets.images.splashLogoWhite.path,
+      ),
+      onEnd: () {
+        context.go(routePathLoginScreen);
+      },
+    );
   }
 }

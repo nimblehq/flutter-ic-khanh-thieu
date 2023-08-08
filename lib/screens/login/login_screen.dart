@@ -3,8 +3,7 @@ import 'package:survey_flutter/screens/login/login_form.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/utils/keyboard_manager.dart';
 
-// TODO: Update to `/login`
-const routePathLoginScreen = '/';
+const routePathLoginScreen = '/login';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
