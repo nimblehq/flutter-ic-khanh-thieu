@@ -15,6 +15,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  bool _isFormSubmitted = false;
 
   TextFormField get _emailTextField => TextFormField(
         keyboardType: TextInputType.emailAddress,
@@ -24,6 +25,10 @@ class _LoginFormState extends State<LoginForm> {
           hintTextStyle: context.textTheme.bodyMedium,
         ),
         style: context.textTheme.bodyMedium,
+        validator: _validateEmail,
+        autovalidateMode: _isFormSubmitted
+            ? AutovalidateMode.onUserInteraction
+            : AutovalidateMode.disabled,
       );
 
   TextFormField get _passwordTextField => TextFormField(
@@ -34,6 +39,10 @@ class _LoginFormState extends State<LoginForm> {
           hintTextStyle: context.textTheme.bodyMedium,
         ),
         style: context.textTheme.bodyMedium,
+        validator: _validatePassword,
+        autovalidateMode: _isFormSubmitted
+            ? AutovalidateMode.onUserInteraction
+            : AutovalidateMode.disabled,
       );
 
   ElevatedButton get _loginButton => ElevatedButton(
@@ -42,9 +51,27 @@ class _LoginFormState extends State<LoginForm> {
         child: Text(context.localizations?.loginButton ?? ''),
       );
 
+  String? _validateEmail(String? email) {
+    // Just use a simple rule, no fancy Regex!
+    if (email == null || email.isEmpty || !email.contains('@')) {
+      return context.localizations?.invalidEmailError;
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? password) {
+    if (password == null || password.isEmpty || password.length < 8) {
+      return context.localizations?.invalidPasswordError;
+    }
+    return null;
+  }
+
   void _submit() {
-    context.dismissKeyboard();
-    // TODO: Integrate with API
+    setState(() => _isFormSubmitted = true);
+    if (_formKey.currentState?.validate() == true) {
+      context.dismissKeyboard();
+      // TODO: Integrate with API
+    }
   }
 
   @override
