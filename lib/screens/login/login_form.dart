@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_flutter/screens/widgets/primary_button_style.dart';
 import 'package:survey_flutter/screens/widgets/primary_text_field_decoration.dart';
+import 'package:survey_flutter/utils/keyboard_manager.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -42,6 +43,7 @@ class _LoginFormState extends State<LoginForm> {
       );
 
   void _submit() {
+    KeyboardManager.dismiss(context);
     // TODO: Integrate with API
   }
 

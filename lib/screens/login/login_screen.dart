@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:survey_flutter/screens/login/login_form.dart';
+import 'package:survey_flutter/utils/keyboard_manager.dart';
 
 // TODO: Update to `/login`
 const routePathLoginScreen = '/';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _LoginSrceenState();
 }
@@ -33,15 +35,18 @@ class _LoginSrceenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Stack(
-        alignment: AlignmentDirectional.center,
-        fit: StackFit.expand,
-        children: [
-          _gradientOverlay,
-          _loginForm,
-        ],
+    return GestureDetector(
+      onTap: () => KeyboardManager.dismiss(context),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          alignment: AlignmentDirectional.center,
+          fit: StackFit.expand,
+          children: [
+            _gradientOverlay,
+            _loginForm,
+          ],
+        ),
       ),
     );
   }
