@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:survey_flutter/screens/login/login_form.dart';
+import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/utils/keyboard_manager.dart';
 
 // TODO: Update to `/login`
@@ -28,7 +29,7 @@ class _LoginSrceenState extends State<LoginScreen> {
 
   late final _loginForm = const Padding(
     padding: EdgeInsets.symmetric(
-      horizontal: 24.0,
+      horizontal: Metrics.defaultHorizontalPadding,
     ),
     child: LoginForm(),
   );

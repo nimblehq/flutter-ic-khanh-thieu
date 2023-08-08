@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_flutter/screens/widgets/primary_button_style.dart';
 import 'package:survey_flutter/screens/widgets/primary_text_field_decoration.dart';
+import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/utils/keyboard_manager.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _LoginFormState();
 }
@@ -64,7 +66,7 @@ class _LoginFormState extends State<LoginForm> {
             height: fieldSpacing,
           ),
           SizedBox(
-            height: 56,
+            height: Metrics.formFieldHeight,
             width: double.infinity,
             child: _loginButton,
           ),
