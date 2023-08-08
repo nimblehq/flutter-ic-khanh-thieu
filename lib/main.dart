@@ -3,7 +3,6 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
 import 'package:go_router/go_router.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:survey_flutter/screens/splash/splash.dart';
 
 void main() async {
@@ -21,8 +20,7 @@ class MyApp extends StatelessWidget {
     routes: <GoRoute>[
       GoRoute(
           path: routePathSplashScreen,
-          builder: (BuildContext context, GoRouterState state) =>
-              const SplashScreen()),
+          builder: (_, __) => const SplashScreen()),
     ],
   );
 
@@ -39,61 +37,6 @@ class MyApp extends StatelessWidget {
       routeInformationProvider: _router.routeInformationProvider,
       routeInformationParser: _router.routeInformationParser,
       routerDelegate: _router.routerDelegate,
-    );
-  }
-}
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: FutureBuilder<PackageInfo>(
-            future: PackageInfo.fromPlatform(),
-            builder: (context, snapshot) {
-              return snapshot.hasData
-                  ? Text(snapshot.data?.appName ?? "")
-                  : const SizedBox.shrink();
-            }),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            const SizedBox(height: 24),
-            FractionallySizedBox(
-              widthFactor: 0.5,
-              child: Image.asset(
-                Assets.images.nimbleLogo.path,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-            const SizedBox(height: 24),
-            Text(AppLocalizations.of(context)!.hello),
-            Text(
-              FlutterConfig.get('SECRET'),
-              style: const TextStyle(color: Colors.black, fontSize: 24),
-            ),
-            const SizedBox(height: 24)
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class SecondScreen extends StatelessWidget {
-  const SecondScreen({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Second Screen"),
-      ),
     );
   }
 }

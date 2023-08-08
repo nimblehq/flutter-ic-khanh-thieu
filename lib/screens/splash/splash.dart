@@ -10,7 +10,6 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen> {
   bool _isLogoVisible = false;
-  bool _shouldStartAnimation = false;
 
   @override
   void initState() {
@@ -28,7 +27,7 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: LayoutBuilder(builder: (context, constraints) {
+      body: LayoutBuilder(builder: (_, constraints) {
         return Stack(
           alignment: AlignmentDirectional.center,
           fit: StackFit.expand,
@@ -45,21 +44,11 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   Widget _buildAnimatedLogo(BoxConstraints constraints) {
-    return AnimatedPositioned(
-      duration: const Duration(seconds: 1),
-      top: _shouldStartAnimation ? 153.0 : constraints.maxHeight / 2.0,
-      child: AnimatedOpacity(
+    return AnimatedOpacity(
         opacity: _isLogoVisible ? 1.0 : 0.0,
         duration: const Duration(milliseconds: 500),
         child: Image.asset(
           Assets.images.splashLogoWhite.path,
-        ),
-        onEnd: () {
-          setState(() {
-            _shouldStartAnimation = true;
-          });
-        },
-      ),
-    );
+        ));
   }
 }
