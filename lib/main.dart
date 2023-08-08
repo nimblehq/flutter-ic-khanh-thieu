@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:survey_flutter/screens/splash/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -11,8 +12,7 @@ void main() async {
   runApp(MyApp());
 }
 
-const routePathRootScreen = '/';
-const routePathSecondScreen = 'second';
+const routePathSplashScreen = '/';
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
@@ -20,16 +20,9 @@ class MyApp extends StatelessWidget {
   final GoRouter _router = GoRouter(
     routes: <GoRoute>[
       GoRoute(
-        path: routePathRootScreen,
+        path: routePathSplashScreen,
         builder: (BuildContext context, GoRouterState state) =>
-            const HomeScreen(),
-        routes: [
-          GoRoute(
-            path: routePathSecondScreen,
-            builder: (BuildContext context, GoRouterState state) =>
-                const SecondScreen(),
-          ),
-        ],
+            const SplashScreen()
       ),
     ],
   );
@@ -83,11 +76,7 @@ class HomeScreen extends StatelessWidget {
               FlutterConfig.get('SECRET'),
               style: const TextStyle(color: Colors.black, fontSize: 24),
             ),
-            const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () => context.go('/$routePathSecondScreen'),
-              child: const Text("Navigate to Second Screen"),
-            ),
+            const SizedBox(height: 24)
           ],
         ),
       ),
