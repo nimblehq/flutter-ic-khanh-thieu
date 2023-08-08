@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -9,7 +10,7 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen> {
   bool _isLogoVisible = false;
-  bool _shouldStartAnimate = false;
+  bool _shouldStartAnimation = false;
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class SplashScreenState extends State<SplashScreen> {
   Widget _buildAnimatedLogo(BoxConstraints constraints) {
     return AnimatedPositioned(
       duration: const Duration(seconds: 1),
-      top: _shouldStartAnimate ? 153.0 : constraints.maxHeight / 2.0,
+      top: _shouldStartAnimation ? 153.0 : constraints.maxHeight / 2.0,
       child: AnimatedOpacity(
         opacity: _isLogoVisible ? 1.0 : 0.0,
         duration: const Duration(milliseconds: 500),
@@ -55,7 +56,7 @@ class SplashScreenState extends State<SplashScreen> {
         ),
         onEnd: () {
           setState(() {
-            _shouldStartAnimate = true;
+            _shouldStartAnimation = true;
           });
         },
       ),

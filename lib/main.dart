@@ -20,10 +20,9 @@ class MyApp extends StatelessWidget {
   final GoRouter _router = GoRouter(
     routes: <GoRoute>[
       GoRoute(
-        path: routePathSplashScreen,
-        builder: (BuildContext context, GoRouterState state) =>
-            const SplashScreen()
-      ),
+          path: routePathSplashScreen,
+          builder: (BuildContext context, GoRouterState state) =>
+              const SplashScreen()),
     ],
   );
 
