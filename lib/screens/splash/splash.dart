@@ -19,9 +19,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   void _delayedLogoVisibility() async {
     await Future.delayed(const Duration(seconds: 1));
-    setState(() {
-      _isLogoVisible = true;
-    });
+    setState(() => _isLogoVisible = true);
   }
 
   @override
@@ -36,14 +34,14 @@ class SplashScreenState extends State<SplashScreen> {
               Assets.images.splashBackground.path,
               fit: BoxFit.cover,
             ),
-            _buildAnimatedLogo(constraints),
+            _buildAnimatedLogo(),
           ],
         );
       }),
     );
   }
 
-  Widget _buildAnimatedLogo(BoxConstraints constraints) {
+  Widget _buildAnimatedLogo() {
     return AnimatedOpacity(
         opacity: _isLogoVisible ? 1.0 : 0.0,
         duration: const Duration(milliseconds: 500),
