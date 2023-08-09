@@ -46,7 +46,7 @@ class SplashScreenState extends State<SplashScreen> {
   Widget _buildAnimatedLogo() {
     return AnimatedOpacity(
       opacity: _isLogoVisible ? 1.0 : 0.0,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(seconds: 1),
       child: Image.asset(
         Assets.images.splashLogoWhite.path,
       ),
