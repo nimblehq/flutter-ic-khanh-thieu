@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:survey_flutter/model/login_model.dart';
-import 'package:survey_flutter/repository/authentication_repository.dart';
+import 'package:survey_flutter/repositories/authentication_repository.dart';
 import 'package:survey_flutter/usecases/base/base_use_case.dart';
 import 'package:injectable/injectable.dart';
 

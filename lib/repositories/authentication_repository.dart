@@ -24,15 +24,13 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
     required String password,
   }) async {
     try {
-      final response = await _authenticationApiService.login(
-        LoginRequest(
-          email: email,
-          password: password,
-          clientId: Env.clientId,
-          clientSecret: Env.clientSecret,
-          grantType: grantType,
-        ),
-      );
+      final response = await _authenticationApiService.login(LoginRequest(
+        email: email,
+        password: password,
+        clientId: Env.clientId,
+        clientSecret: Env.clientSecret,
+        grantType: grantType,
+      ));
       return response.toLoginModel();
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
