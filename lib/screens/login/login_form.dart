@@ -14,6 +14,7 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  final _fieldSpacing = 20.0;
 
   TextFormField get _emailTextField => TextFormField(
         keyboardType: TextInputType.emailAddress,
@@ -48,19 +49,18 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    const fieldSpacing = 20.0;
     return Form(
       key: _formKey,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _emailTextField,
-          const SizedBox(
-            height: fieldSpacing,
+          SizedBox(
+            height: _fieldSpacing,
           ),
           _passwordTextField,
-          const SizedBox(
-            height: fieldSpacing,
+          SizedBox(
+            height: _fieldSpacing,
           ),
           SizedBox(
             height: Metrics.formFieldHeight,
