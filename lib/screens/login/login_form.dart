@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:survey_flutter/screens/widgets/primary_button_style.dart';
-import 'package:survey_flutter/screens/widgets/primary_text_field_decoration.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
+import 'package:survey_flutter/theme/primary_button_style.dart';
+import 'package:survey_flutter/theme/primary_text_field_decoration.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
 import 'package:survey_flutter/utils/keyboard_manager.dart';
+
+const _fieldSpacing = 20.0;
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -14,7 +16,6 @@ class LoginForm extends StatefulWidget {
 
 class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
-  final _fieldSpacing = 20.0;
 
   TextFormField get _emailTextField => TextFormField(
         keyboardType: TextInputType.emailAddress,
@@ -55,11 +56,11 @@ class _LoginFormState extends State<LoginForm> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           _emailTextField,
-          SizedBox(
+          const SizedBox(
             height: _fieldSpacing,
           ),
           _passwordTextField,
-          SizedBox(
+          const SizedBox(
             height: _fieldSpacing,
           ),
           SizedBox(
