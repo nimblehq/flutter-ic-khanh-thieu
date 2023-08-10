@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-extension Theming on BuildContext {
+extension BuildContextExtension on BuildContext {
   TextTheme get textTheme => Theme.of(this).textTheme;
-}
 
-extension Localization on BuildContext {
   AppLocalizations? get localizations => AppLocalizations.of(this);
+
+  dismissKeyboard() {
+    FocusNode currentFocusNode = FocusScope.of(this);
+    if (!currentFocusNode.hasPrimaryFocus) {
+      currentFocusNode.unfocus();
+    }
+  }
 }

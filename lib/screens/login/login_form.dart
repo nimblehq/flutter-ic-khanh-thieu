@@ -3,7 +3,6 @@ import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/theme/primary_button_style.dart';
 import 'package:survey_flutter/theme/primary_text_field_decoration.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
-import 'package:survey_flutter/utils/keyboard_manager.dart';
 
 const _fieldSpacing = 20.0;
 
@@ -44,7 +43,7 @@ class _LoginFormState extends State<LoginForm> {
       );
 
   void _submit() {
-    KeyboardManager.dismiss(context);
+    context.dismissKeyboard();
     // TODO: Integrate with API
   }
 

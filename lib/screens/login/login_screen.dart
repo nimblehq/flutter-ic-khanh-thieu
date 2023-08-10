@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
 import 'package:survey_flutter/screens/login/login_form.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
-import 'package:survey_flutter/utils/keyboard_manager.dart';
+import 'package:survey_flutter/utils/build_context_ext.dart';
 
 const routePathLoginScreen = '/login';
 
@@ -111,7 +111,7 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => KeyboardManager.dismiss(context),
+      onTap: () => context.dismissKeyboard(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Stack(
