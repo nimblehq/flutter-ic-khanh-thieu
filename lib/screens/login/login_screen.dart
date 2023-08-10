@@ -11,10 +11,10 @@ class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _LoginSrceenState();
+  State<StatefulWidget> createState() => _LoginScreenState();
 }
 
-class _LoginSrceenState extends State<LoginScreen>
+class _LoginScreenState extends State<LoginScreen>
     with TickerProviderStateMixin {
   final _animationDuration = const Duration(milliseconds: 600);
 
@@ -93,9 +93,7 @@ class _LoginSrceenState extends State<LoginScreen>
     position: _logoOffetAnimation,
     child: ScaleTransition(
       scale: _logoScaleAnimation,
-      child: Image.asset(
-        Assets.images.splashLogoWhite.path,
-      ),
+      child: Assets.images.splashLogoWhite.image(),
     ),
   );
 
@@ -108,13 +106,6 @@ class _LoginSrceenState extends State<LoginScreen>
       child: LoginForm(),
     ),
   );
-
-  @override
-  void dispose() {
-    _logoAnimationController.dispose();
-    _formAnimationController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,5 +125,12 @@ class _LoginSrceenState extends State<LoginScreen>
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _logoAnimationController.dispose();
+    _formAnimationController.dispose();
+    super.dispose();
   }
 }
