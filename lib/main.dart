@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:survey_flutter/screens/splash/splash.dart';
 import 'package:survey_flutter/screens/login/login_screen.dart';
+import 'package:survey_flutter/screens/splash/splash_screen.dart';
 import 'package:survey_flutter/theme/app_theme.dart';
 
 void main() async {

@@ -7,11 +7,11 @@ class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => SplashScreenState();
+  State<StatefulWidget> createState() => _SplashScreenState();
 }
 
-class SplashScreenState extends State<SplashScreen> {
-  bool _isLogoVisible = false;
+class _SplashScreenState extends State<SplashScreen> {
+  double _logoOpacity = 0;
 
   @override
   void initState() {
@@ -21,7 +21,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   void _delayedLogoVisibility() async {
     await Future.delayed(const Duration(seconds: 1));
-    setState(() => _isLogoVisible = true);
+    setState(() => _logoOpacity = 1);
   }
 
   @override
@@ -45,11 +45,9 @@ class SplashScreenState extends State<SplashScreen> {
 
   Widget _buildAnimatedLogo() {
     return AnimatedOpacity(
-      opacity: _isLogoVisible ? 1.0 : 0.0,
+      opacity: _logoOpacity,
       duration: const Duration(seconds: 1),
-      child: Image.asset(
-        Assets.images.splashLogoWhite.path,
-      ),
+      child: Assets.images.splashLogoWhite.image(),
       onEnd: () {
         context.go(routePathLoginScreen);
       },
