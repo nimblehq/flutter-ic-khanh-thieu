@@ -3,7 +3,7 @@ import 'package:survey_flutter/theme/app_constants.dart';
 
 class PrimaryTextFieldDecoration extends InputDecoration {
   PrimaryTextFieldDecoration(
-      {required String hintText, required TextStyle? hintTextStyle})
+      {required String? hintText, required TextStyle? hintTextStyle})
       : super(
           border: OutlineInputBorder(
             borderSide: BorderSide.none,
