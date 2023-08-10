@@ -28,14 +28,7 @@ void main() {
     });
 
     test('When login successfully, it returns correct model', () async {
-      final loginResponse = LoginResponse(
-        id: "",
-        accessToken: "",
-        tokenType: "",
-        expiresIn: 0,
-        refreshToken: "",
-        createdAt: 0,
-      );
+      final loginResponse = LoginResponse.dummy();
 
       when(mockAuthApiService.login(any))
           .thenAnswer((_) async => loginResponse);

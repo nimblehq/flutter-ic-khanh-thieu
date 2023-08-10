@@ -31,4 +31,15 @@ class LoginResponse {
         expiresIn: expiresIn,
         refreshToken: refreshToken,
       );
+
+  static LoginResponse dummy() {
+    return LoginResponse(
+      id: "",
+      accessToken: "",
+      tokenType: "",
+      expiresIn: 0,
+      refreshToken: "",
+      createdAt: 0,
+    );
+  }
 }

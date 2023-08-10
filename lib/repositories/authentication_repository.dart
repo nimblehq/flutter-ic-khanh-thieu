@@ -5,6 +5,8 @@ import 'package:survey_flutter/model/login_model.dart';
 import 'package:survey_flutter/model/request/login_request.dart';
 import 'package:injectable/injectable.dart';
 
+const String _grantType = "password";
+
 abstract class AuthenticationRepository {
   Future<LoginModel> login({
     required String email,
@@ -29,7 +31,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
         password: password,
         clientId: Env.clientId,
         clientSecret: Env.clientSecret,
-        grantType: grantType,
+        grantType: _grantType,
       ));
       return response.toLoginModel();
     } catch (exception) {
