@@ -1,5 +1,7 @@
 import 'package:japx/japx.dart';
 
-Map<String, dynamic> decode(Map<String, dynamic> json) {
-  return Japx.decode(json)['data'];
+class ResponseDecoder {
+  static Map<String, dynamic> decode(Map<String, dynamic> json) {
+    return Japx.decode(json)['data'];
+  }
 }

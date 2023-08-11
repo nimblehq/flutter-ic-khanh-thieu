@@ -23,7 +23,7 @@ class LoginResponse {
   });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
-      _$LoginResponseFromJson(decode(json));
+      _$LoginResponseFromJson(ResponseDecoder.decode(json));
 
   LoginModel toLoginModel() => LoginModel(
         id: id,
