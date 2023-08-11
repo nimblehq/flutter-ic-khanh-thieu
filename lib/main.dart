@@ -12,15 +12,15 @@ void main() async {
   await FlutterConfig.loadEnvVariables();
   runApp(
     ProviderScope(
-      child: MyApp(),
+      child: App(),
     ),
   );
 }
 
 const routePathSplashScreen = '/';
 
-class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+class App extends StatelessWidget {
+  App({Key? key}) : super(key: key);
 
   final GoRouter _router = GoRouter(
     routes: <GoRoute>[
