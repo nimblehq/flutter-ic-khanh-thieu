@@ -8,12 +8,12 @@ final loginViewModelProvider =
 class LoginViewModel extends StateNotifier<void> {
   LoginViewModel() : super([]);
 
-  bool validateEmail(String? email) {
+  bool isValidEmail(String? email) {
     // Just use a simple rule, no fancy Regex!
-    return !(email == null || email.isEmpty || !email.contains('@'));
+    return !(email == null || !email.contains('@'));
   }
 
-  bool validatePassword(String? password) {
-    return !(password == null || password.isEmpty || password.length < 8);
+  bool isValidPassword(String? password) {
+    return !(password == null || password.length < 8);
   }
 }

@@ -54,14 +54,14 @@ class _LoginFormState extends ConsumerState<LoginForm> {
       );
 
   String? _validateEmail(String? email) {
-    if (!ref.read(loginViewModelProvider.notifier).validateEmail(email)) {
+    if (!ref.read(loginViewModelProvider.notifier).isValidEmail(email)) {
       return context.localizations?.invalidEmailError;
     }
     return null;
   }
 
   String? _validatePassword(String? password) {
-    if (!ref.read(loginViewModelProvider.notifier).validatePassword(password)) {
+    if (!ref.read(loginViewModelProvider.notifier).isValidPassword(password)) {
       return context.localizations?.invalidPasswordError;
     }
     return null;

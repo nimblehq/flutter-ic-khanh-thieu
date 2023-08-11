@@ -14,55 +14,55 @@ void main() {
 
     tearDown(() => container.dispose());
 
-    group('Its validateEmail()', () {
+    group('email validation', () {
       test('When validating a null email, it returns false', () {
-        expect(loginViewModel.validateEmail(null), false);
+        expect(loginViewModel.isValidEmail(null), false);
       });
 
       test('When validating an empty email, it returns false', () {
         const email = '';
-        expect(loginViewModel.validateEmail(email), false);
+        expect(loginViewModel.isValidEmail(email), false);
       });
 
       test('When validating an invalid email, it returns false', () {
         const email = 'user.test.com';
-        expect(loginViewModel.validateEmail(email), false);
+        expect(loginViewModel.isValidEmail(email), false);
       });
 
       test('When validating a valid email, it returns true', () {
         const email = 'user@test.com';
-        expect(loginViewModel.validateEmail(email), true);
+        expect(loginViewModel.isValidEmail(email), true);
       });
     });
 
-    group('Its validatePassword()', () {
+    group('password validation', () {
       test('When validating a null password, it returns false', () {
-        expect(loginViewModel.validatePassword(null), false);
+        expect(loginViewModel.isValidPassword(null), false);
       });
 
       test('When validating an empty password, it returns false', () {
         const password = '';
-        expect(loginViewModel.validatePassword(password), false);
+        expect(loginViewModel.isValidPassword(password), false);
       });
 
       test(
           'When validating a password that having less than 8 letters, it returns false',
           () {
         const password = '1234567';
-        expect(loginViewModel.validatePassword(password), false);
+        expect(loginViewModel.isValidPassword(password), false);
       });
 
       test('When validating a password that having 8 letters, it returns true',
           () {
         const password = '12345678';
-        expect(loginViewModel.validatePassword(password), true);
+        expect(loginViewModel.isValidPassword(password), true);
       });
 
       test(
           'When validating a password that having more than 8 letters, it returns true',
           () {
         const password = '1234567890';
-        expect(loginViewModel.validatePassword(password), true);
+        expect(loginViewModel.isValidPassword(password), true);
       });
     });
   });
