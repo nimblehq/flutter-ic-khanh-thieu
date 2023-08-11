@@ -1,3 +1,7 @@
 {
-  "hello": "Hello!"
+    "emailInputHint": "Email",
+    "passwordInputHint": "Password",
+    "loginButton": "Log in",
+    "invalidEmailError": "Please enter the valid email format.",
+    "invalidPasswordError": "Password must be at least 8 characters long."
 }

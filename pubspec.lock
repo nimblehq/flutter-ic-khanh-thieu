@@ -193,6 +193,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.2"
+  equatable:
+    dependency: "direct main"
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -272,6 +280,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_riverpod:
+    dependency: "direct main"
+    description:
+      name: flutter_riverpod
+      sha256: b83ac5827baadefd331ea1d85110f34645827ea234ccabf53a655f41901a9bf4
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.6"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -319,6 +335,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  get_it:
+    dependency: transitive
+    description:
+      name: get_it
+      sha256: "529de303c739fca98cd7ece5fca500d8ff89649f1bb4b4e94fb20954abcd7468"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.6.0"
   glob:
     dependency: transitive
     description:
@@ -367,6 +391,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  injectable:
+    dependency: "direct main"
+    description:
+      name: injectable
+      sha256: f71eb879124ed286cbd2210337b91ff5f345f146187c1f1891c172e0ac06443a
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.5.4"
   integration_test:
     dependency: "direct dev"
     description: flutter
@@ -388,6 +420,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  japx:
+    dependency: "direct main"
+    description:
+      name: japx
+      sha256: d43074dd5d7d4e9d7a4325fe27e4cefeb1db600ea6b69ea9fb94b7fc372baabe
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   js:
     dependency: transitive
     description:
@@ -620,6 +660,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0"
+  riverpod:
+    dependency: transitive
+    description:
+      name: riverpod
+      sha256: "80e48bebc83010d5e67a11c9514af6b44bbac1ec77b4333c8ea65dbc79e2d8ef"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.6"
   shelf:
     dependency: transitive
     description:
@@ -673,6 +721,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
+  state_notifier:
+    dependency: transitive
+    description:
+      name: state_notifier
+      sha256: "8fe42610f179b843b12371e40db58c9444f8757f8b69d181c97e50787caed289"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.2+1"
   stream_channel:
     dependency: transitive
     description:
