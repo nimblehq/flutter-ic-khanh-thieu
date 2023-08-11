@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey_flutter/screens/login/login_view_model.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/theme/primary_button_style.dart';
 import 'package:survey_flutter/theme/primary_text_field_decoration.dart';
@@ -6,15 +8,16 @@ import 'package:survey_flutter/utils/build_context_ext.dart';
 
 const _fieldSpacing = 20.0;
 
-class LoginForm extends StatefulWidget {
+class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _LoginFormState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _LoginFormState extends ConsumerState<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  bool _isFormSubmitted = false;
 
   TextFormField get _emailTextField => TextFormField(
         keyboardType: TextInputType.emailAddress,
@@ -24,6 +27,10 @@ class _LoginFormState extends State<LoginForm> {
           hintTextStyle: context.textTheme.bodyMedium,
         ),
         style: context.textTheme.bodyMedium,
+        validator: _validateEmail,
+        autovalidateMode: _isFormSubmitted
+            ? AutovalidateMode.onUserInteraction
+            : AutovalidateMode.disabled,
       );
 
   TextFormField get _passwordTextField => TextFormField(
@@ -34,6 +41,10 @@ class _LoginFormState extends State<LoginForm> {
           hintTextStyle: context.textTheme.bodyMedium,
         ),
         style: context.textTheme.bodyMedium,
+        validator: _validatePassword,
+        autovalidateMode: _isFormSubmitted
+            ? AutovalidateMode.onUserInteraction
+            : AutovalidateMode.disabled,
       );
 
   ElevatedButton get _loginButton => ElevatedButton(
@@ -42,9 +53,26 @@ class _LoginFormState extends State<LoginForm> {
         child: Text(context.localizations?.loginButton ?? ''),
       );
 
+  String? _validateEmail(String? email) {
+    if (!ref.read(loginViewModelProvider.notifier).isValidEmail(email)) {
+      return context.localizations?.invalidEmailError;
+    }
+    return null;
+  }
+
+  String? _validatePassword(String? password) {
+    if (!ref.read(loginViewModelProvider.notifier).isValidPassword(password)) {
+      return context.localizations?.invalidPasswordError;
+    }
+    return null;
+  }
+
   void _submit() {
-    context.dismissKeyboard();
-    // TODO: Integrate with API
+    setState(() => _isFormSubmitted = true);
+    if (_formKey.currentState?.validate() == true) {
+      context.dismissKeyboard();
+      // TODO: Integrate with API
+    }
   }
 
   @override
