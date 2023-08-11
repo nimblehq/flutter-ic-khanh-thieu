@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey_flutter/screens/login/login_view_model.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/theme/primary_button_style.dart';
 import 'package:survey_flutter/theme/primary_text_field_decoration.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:survey_flutter/screens/login/login_view_model.dart';
 
 const _fieldSpacing = 20.0;
 
