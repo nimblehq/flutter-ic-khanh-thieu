@@ -2,16 +2,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:survey_flutter/screens/login/login_view_model.dart';
+import 'package:survey_flutter/utils/internet_connection_manager.dart';
 
 import '../../mocks/generate_mocks.mocks.dart';
 
 void main() {
   group('LoginViewModel', () {
     late ProviderContainer container;
+    late MockInternetConnectionManager mockInternetConnectionManager;
     late MockAsyncListener listener;
 
     setUp(() {
-      container = ProviderContainer();
+      mockInternetConnectionManager = MockInternetConnectionManager();
+      container = ProviderContainer(overrides: [
+        internetConnectionManagerProvider
+            .overrideWithValue(mockInternetConnectionManager),
+      ]);
+
       listener = MockAsyncListener();
       container.listen(
         loginViewModelProvider,
@@ -76,9 +83,50 @@ void main() {
       });
     });
 
+    // TODO: Update when integrating with API
     group('login', () {
-      test('When logging in unsuccessfully, it emits error correspondingly',
+      //  test('When logging in unsuccessfully, it emits error correspondingly',
+      //      () async {
+      //    const data = AsyncData<void>(null);
+      //    // verify initial value from build method
+      //    verify(listener(null, data));
+
+      //    final loginViewModel = container.read(loginViewModelProvider.notifier);
+      //    await loginViewModel.login(
+      //        email: 'user@test.com', password: '12345678');
+
+      //    verifyInOrder([
+      //      listener(data, isA<AsyncLoading>()),
+      //      listener(isA<AsyncLoading<void>>(), isA<AsyncError<void>>()),
+      //    ]);
+      //    verifyNoMoreInteractions(listener);
+      //  });
+
+      test(
+          'When logging in timeout with Internet connection, it emits error correspondingly',
           () async {
+        when(mockInternetConnectionManager.hasConnection())
+            .thenAnswer((_) async => true);
+        const data = AsyncData<void>(null);
+        // verify initial value from build method
+        verify(listener(null, data));
+
+        final loginViewModel = container.read(loginViewModelProvider.notifier);
+        await loginViewModel.login(
+            email: 'user@test.com', password: '12345678');
+
+        verifyInOrder([
+          listener(data, isA<AsyncLoading>()),
+          listener(isA<AsyncLoading<void>>(), isA<AsyncError<void>>()),
+        ]);
+        verifyNoMoreInteractions(listener);
+      });
+
+      test(
+          'When logging in timeout without Internet connection, it emits error correspondingly',
+          () async {
+        when(mockInternetConnectionManager.hasConnection())
+            .thenAnswer((_) async => true);
         const data = AsyncData<void>(null);
         // verify initial value from build method
         verify(listener(null, data));
