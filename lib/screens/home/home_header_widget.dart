@@ -1,12 +1,11 @@
 import 'package:survey_flutter/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
 
-class HomeHeader extends StatelessWidget {
-  const HomeHeader({Key? key}) : super(key: key);
+class HomeHeaderWidget extends StatelessWidget {
+  const HomeHeaderWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class HomeHeader extends StatelessWidget {
           ),
           const SizedBox(height: Metrics.spacing4),
           Text(
-            "Today",
+            context.localizations?.today ?? "",
             style: context.textTheme.labelLarge,
           ),
         ],
