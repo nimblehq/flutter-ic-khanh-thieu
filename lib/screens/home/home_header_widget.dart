@@ -11,7 +11,7 @@ class HomeHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentDate = DateTime.now().fullDate;
+    final currentDate = DateTime.now().fullDate.toUpperCase();
 
     return SafeArea(
       child: Padding(
