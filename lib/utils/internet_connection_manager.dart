@@ -15,7 +15,6 @@ class InternetConnectionManagerImpl extends InternetConnectionManager {
       InternetConnectionChecker();
 
   @override
-  Future<bool> hasConnection() async {
-    return await _internetConnectionChecker.hasConnection;
-  }
+  Future<bool> hasConnection() async =>
+      _internetConnectionChecker.hasConnection;
 }

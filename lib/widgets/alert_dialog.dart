@@ -9,9 +9,9 @@ Future<void> showAlertDialog({
   required String title,
   required String message,
   required List<Widget> actions,
-}) {
+}) async {
   if (Platform.isIOS) {
-    return showCupertinoDialog(
+    await showCupertinoDialog(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
         title: Text(title),
@@ -20,7 +20,7 @@ Future<void> showAlertDialog({
       ),
     );
   } else if (Platform.isAndroid) {
-    return showDialog(
+    await showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) => AlertDialog(
@@ -33,7 +33,5 @@ Future<void> showAlertDialog({
         actions: actions,
       ),
     );
-  } else {
-    return Future(() => {});
   }
 }
