@@ -13,7 +13,7 @@ Future<void> showAlertDialog({
   if (Platform.isIOS) {
     await showCupertinoDialog(
       context: context,
-      builder: (BuildContext context) => CupertinoAlertDialog(
+      builder: (_) => CupertinoAlertDialog(
         title: Text(title),
         content: Text(message),
         actions: actions,
@@ -23,7 +23,7 @@ Future<void> showAlertDialog({
     await showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) => AlertDialog(
+      builder: (_) => AlertDialog(
         title: Text(title),
         titleTextStyle:
             context.textTheme.labelLarge?.copyWith(color: Colors.black),

@@ -74,7 +74,7 @@ class _LoginFormState extends ConsumerState<LoginForm> {
 
   void _submit() {
     setState(() => _isFormSubmitted = true);
-    bool isFormValidated = _formKey.currentState?.validate() ?? false;
+    final isFormValidated = _formKey.currentState?.validate() ?? false;
 
     if (!isFormValidated) {
       return;

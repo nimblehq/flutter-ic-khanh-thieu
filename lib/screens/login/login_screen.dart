@@ -112,8 +112,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
     ),
   );
 
-  @override
-  Widget build(BuildContext context) {
+  _setUpListener(BuildContext context) {
     ref.listen<AsyncValue<void>>(loginViewModelProvider, (_, next) {
       next.maybeWhen(
         data: (_) {
@@ -138,7 +137,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
         orElse: () {},
       );
     });
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    _setUpListener(context);
     return GestureDetector(
       onTap: () => context.dismissKeyboard(),
       child: Scaffold(

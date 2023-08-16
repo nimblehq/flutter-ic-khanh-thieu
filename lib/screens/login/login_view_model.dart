@@ -19,7 +19,10 @@ class LoginViewModel extends AutoDisposeAsyncNotifier<void> {
     return !(password == null || password.length < 8);
   }
 
-  login({required String email, required String password}) async {
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
     state = const AsyncLoading();
     // TODO: Integrate with API
 
