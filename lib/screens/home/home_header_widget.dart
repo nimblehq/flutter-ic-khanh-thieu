@@ -11,7 +11,7 @@ class HomeHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentDateFormatted = DateTimeUtils.formatCurrentDate();
+    final currentDate = DateTime.now().fullDate;
 
     return SafeArea(
       child: Padding(
@@ -22,7 +22,7 @@ class HomeHeaderWidget extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeaderInfo(context, currentDateFormatted),
+            _buildHeaderInfo(context, currentDate),
             const Spacer(),
             _buildProfileAvatar(),
           ],

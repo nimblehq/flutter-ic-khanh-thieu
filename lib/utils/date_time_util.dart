@@ -1,8 +1,5 @@
 import 'package:intl/intl.dart';
 
-class DateTimeUtils {
-  static String formatCurrentDate() {
-    final now = DateTime.now();
-    return DateFormat('EEEE, MMMM dd').format(now).toUpperCase();
-  }
+extension DateTimeExtensions on DateTime {
+  String get fullDate => DateFormat('EEEE, MMMM dd').format(this);
 }
