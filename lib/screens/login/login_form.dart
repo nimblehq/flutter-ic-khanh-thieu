@@ -7,6 +7,7 @@ import 'package:survey_flutter/theme/primary_text_field_decoration.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
 
 const _fieldSpacing = 20.0;
+const _loadingIndicatorSize = 28.0;
 
 class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -55,7 +56,20 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   ElevatedButton get _loginButton => ElevatedButton(
         style: PrimaryButtonStyle(hintTextStyle: context.textTheme.labelMedium),
         onPressed: _submit,
-        child: Text(context.localizations.loginButton),
+        child: Consumer(
+          builder: (_, widgetRef, __) {
+            final loginVievModel = widgetRef.watch(loginViewModelProvider);
+            return (loginVievModel.isLoading)
+                ? const SizedBox(
+                    width: _loadingIndicatorSize,
+                    height: _loadingIndicatorSize,
+                    child: CircularProgressIndicator(
+                      color: Colors.black45,
+                    ),
+                  )
+                : Text(context.localizations.loginButton);
+          },
+        ),
       );
 
   String? _validateEmail(String? email) {
