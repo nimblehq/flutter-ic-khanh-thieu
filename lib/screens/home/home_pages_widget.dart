@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
 import 'package:survey_flutter/screens/home/home_footer_widget.dart';
+import 'package:survey_flutter/theme/app_constants.dart';
 
 class HomePagesWidget extends StatelessWidget {
   final PageController _pageController = PageController();
@@ -13,33 +14,34 @@ class HomePagesWidget extends StatelessWidget {
     return PageView.builder(
       itemCount: 4,
       controller: _pageController,
-      itemBuilder: (BuildContext context, int index) {
-        return Stack(
-          children: [
-            Positioned.fill(
-              child: Image.asset(
-                Assets.images.dummyBackground.path,
-                fit: BoxFit.cover,
-              ),
+      itemBuilder: (_, int index) {
+        return Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(Assets.images.dummyBackground.path),
+              fit: BoxFit.cover,
             ),
-            Column(
-              children: [
-                Expanded(child: Container()), // Space above footer
-                SafeArea(
-                  bottom: true,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.only(left: 0, bottom: 20, right: 0),
-                    child: HomeFooterWidget(
-                      onNextButtonPressed: () {
-                        // Handle the next button pressed event
-                      },
-                    ),
+          ),
+          child: Column(
+            children: [
+              const Spacer(), // Space above footer
+              SafeArea(
+                bottom: true,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    left: 0,
+                    bottom: Metrics.spacing20,
+                    right: 0,
+                  ),
+                  child: HomeFooterWidget(
+                    onNextButtonPressed: () {
+                      // Handle the next button pressed event
+                    },
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         );
       },
     );

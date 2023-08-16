@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:page_view_dot_indicator/page_view_dot_indicator.dart';
 
 const _opacityUnselectedColor = 0.2;
+const _indicatorSize = 8.0;
+const dotIndicatorSize = Size(
+  _indicatorSize,
+  _indicatorSize,
+);
 
 class HomePageIndicatorWidget extends StatelessWidget {
   const HomePageIndicatorWidget({Key? key}) : super(key: key);
@@ -15,14 +19,8 @@ class HomePageIndicatorWidget extends StatelessWidget {
       count: 3,
       selectedColor: Colors.white,
       unselectedColor: Colors.white.withOpacity(_opacityUnselectedColor),
-      size: const Size(
-        Metrics.homePageIndicatorSize,
-        Metrics.homePageIndicatorSize,
-      ),
-      unselectedSize: const Size(
-        Metrics.homePageIndicatorSize,
-        Metrics.homePageIndicatorSize,
-      ),
+      size: dotIndicatorSize,
+      unselectedSize: dotIndicatorSize,
       alignment: Alignment.bottomLeft,
     );
   }

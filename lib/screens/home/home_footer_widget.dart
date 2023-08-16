@@ -4,27 +4,26 @@ import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
 
 const _descriptionOpacity = 0.7;
-const _contentPadding = EdgeInsets.symmetric(horizontal: 20.0);
+const _buttonSize = 56.0;
 
 class HomeFooterWidget extends StatelessWidget {
-  const HomeFooterWidget({Key? key, required VoidCallback onNextButtonPressed})
-      : super(key: key);
+  const HomeFooterWidget({
+    Key? key,
+    required VoidCallback onNextButtonPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: _contentPadding,
-          child: _buildTitle(context),
-        ),
-        const SizedBox(height: Metrics.defaultHeight),
-        Padding(
-          padding: _contentPadding,
-          child: _buildDescription(context),
-        ),
-      ],
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: Metrics.spacing20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildTitle(context),
+          const SizedBox(height: Metrics.spacing16),
+          _buildDescription(context),
+        ],
+      ),
     );
   }
 
@@ -32,7 +31,7 @@ class HomeFooterWidget extends StatelessWidget {
     // TODO: Replace with survey title
     return Text(
       "Working from home Check-In",
-      style: context.textTheme.titleLarge,
+      style: context.textTheme.titleMedium,
       maxLines: 2,
     );
   }
@@ -56,8 +55,8 @@ class HomeFooterWidget extends StatelessWidget {
 
   Widget _buildNextButton() {
     return SizedBox(
-      width: Metrics.primaryButtonSize,
-      height: Metrics.primaryButtonSize,
+      width: _buttonSize,
+      height: _buttonSize,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: const CircleBorder(),
@@ -68,7 +67,9 @@ class HomeFooterWidget extends StatelessWidget {
           Assets.images.next.path,
           color: Colors.black,
         ),
-        onPressed: () {},
+        onPressed: () {
+          // TODO: Handle the next button pressed event
+        },
       ),
     );
   }

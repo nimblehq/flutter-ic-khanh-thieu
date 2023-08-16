@@ -1,15 +1,17 @@
 import 'package:survey_flutter/gen/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
-import 'package:intl/intl.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
+import 'package:survey_flutter/utils/date_time_util.dart';
+
+const _avatarSize = 36.0;
 
 class HomeHeaderWidget extends StatelessWidget {
   const HomeHeaderWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final currentDateFormatted = _formatCurrentDate();
+    final currentDateFormatted = DateTimeUtils.formatCurrentDate();
 
     return SafeArea(
       child: Padding(
@@ -21,6 +23,7 @@ class HomeHeaderWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildHeaderInfo(context, currentDateFormatted),
+            const Spacer(),
             _buildProfileAvatar(),
           ],
         ),
@@ -28,40 +31,31 @@ class HomeHeaderWidget extends StatelessWidget {
     );
   }
 
-  String _formatCurrentDate() {
-    final now = DateTime.now();
-    return DateFormat('EEEE, MMMM dd').format(now).toUpperCase();
-  }
-
   Widget _buildHeaderInfo(BuildContext context, String currentDateFormatted) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            currentDateFormatted,
-            style: context.textTheme.labelSmall,
-          ),
-          const SizedBox(height: Metrics.spacing4),
-          Text(
-            context.localizations?.today ?? "",
-            style: context.textTheme.labelLarge,
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          currentDateFormatted,
+          style: context.textTheme.labelSmall,
+        ),
+        const SizedBox(height: Metrics.spacing4),
+        Text(
+          context.localizations?.today ?? "",
+          style: context.textTheme.titleLarge,
+        ),
+      ],
     );
   }
 
   Widget _buildProfileAvatar() {
-    return Padding(
-      padding: const EdgeInsets.only(top: Metrics.spacing20),
-      child: SizedBox(
-        width: Metrics.avatarSize,
-        height: Metrics.avatarSize,
-        child: CircleAvatar(
-          radius: Metrics.avatarSize,
-          backgroundImage: AssetImage(Assets.images.dummyAvatar.path),
-        ),
+    return Container(
+      margin: const EdgeInsets.only(top: Metrics.spacing20),
+      width: _avatarSize,
+      height: _avatarSize,
+      child: CircleAvatar(
+        radius: _avatarSize,
+        backgroundImage: AssetImage(Assets.images.dummyAvatar.path),
       ),
     );
   }

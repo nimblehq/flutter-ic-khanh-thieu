@@ -18,17 +18,17 @@ class AppTheme {
             labelSmall: TextStyle(
               color: Colors.white,
               fontSize: 13,
-              fontWeight: FontWeight.w800,
-            ),
-            labelLarge: TextStyle(
-              color: Colors.white,
-              fontSize: 34,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.bold,
             ),
             titleLarge: TextStyle(
               color: Colors.white,
+              fontSize: 34,
+              fontWeight: FontWeight.bold,
+            ),
+            titleMedium: TextStyle(
+              color: Colors.white,
               fontSize: 28,
-              fontWeight: FontWeight.w800,
+              fontWeight: FontWeight.bold,
             )),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.white,
