@@ -117,6 +117,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
       next.maybeWhen(
         data: (_) {
           // TODO: Navigate to the Home screen
+          showAlertDialog(
+            context: context,
+            title: 'Login Successfully',
+            message: 'You are now logged in!',
+            actions: [
+              TextButton(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all(Colors.black),
+                ),
+                child: Text(context.localizations.okText),
+                onPressed: () => Navigator.pop(context),
+              )
+            ],
+          );
         },
         error: (error, _) {
           showAlertDialog(
