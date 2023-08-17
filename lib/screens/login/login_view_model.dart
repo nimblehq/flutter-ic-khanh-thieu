@@ -11,9 +11,6 @@ final loginViewModelProvider =
     AsyncNotifierProvider.autoDispose<LoginViewModel, void>(LoginViewModel.new);
 
 class LoginViewModel extends AutoDisposeAsyncNotifier<void> {
-  late LoginUseCase loginUseCase;
-  late InternetConnectionManager internetConnectionManager;
-
   bool isValidEmail(String? email) {
     // Just use a simple rule, no fancy Regex!
     return !(email == null || !email.contains('@'));
@@ -28,7 +25,6 @@ class LoginViewModel extends AutoDisposeAsyncNotifier<void> {
     required String password,
   }) async {
     state = const AsyncLoading();
-
     final loginUseCase = ref.read(loginUseCaseProvider);
     final result = await loginUseCase(
       LoginParams(
@@ -37,9 +33,7 @@ class LoginViewModel extends AutoDisposeAsyncNotifier<void> {
       ),
     );
 
-    if (result is Success) {
-      state = const AsyncData(null);
-    } else if (result is Failed) {
+    if (result is Failed) {
       final error = result as Failed;
       final exception = error.exception.actualException as NetworkExceptions;
 
@@ -64,11 +58,15 @@ class LoginViewModel extends AutoDisposeAsyncNotifier<void> {
         AppError.generic,
         StackTrace.empty,
       );
+      return;
     }
+
+    state = const AsyncData(null);
   }
 
   Future<bool> _hasInternetConnection() async {
-    internetConnectionManager = ref.read(internetConnectionManagerProvider);
+    final internetConnectionManager =
+        ref.read(internetConnectionManagerProvider);
     return await internetConnectionManager.hasConnection();
   }
 
