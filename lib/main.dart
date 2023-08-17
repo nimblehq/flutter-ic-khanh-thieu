@@ -32,7 +32,7 @@ class App extends StatelessWidget {
       GoRoute(
         path: routePathLoginScreen,
         pageBuilder: (_, __) => const NoTransitionPage<void>(
-          child: HomeShimmerLoading(),
+          child: LoginScreen(),
         ),
       ),
       GoRoute(
