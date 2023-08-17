@@ -41,7 +41,7 @@ class HomeHeaderWidget extends StatelessWidget {
         ),
         const SizedBox(height: Metrics.spacing4),
         Text(
-          context.localizations?.today ?? "",
+          context.localizations.today,
           style: context.textTheme.titleLarge,
         ),
       ],
