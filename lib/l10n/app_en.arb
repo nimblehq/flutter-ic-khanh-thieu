@@ -1,7 +1,12 @@
 {
+    "okText": "OK",
     "emailInputHint": "Email",
     "passwordInputHint": "Password",
     "loginButton": "Log in",
     "invalidEmailError": "Please enter the valid email format.",
-    "invalidPasswordError": "Password must be at least 8 characters long."
+    "invalidPasswordError": "Password must be at least 8 characters long.",
+    "unauthorizedError": "Your email or password is incorrect.\nPlease try again.",
+    "noInternetConnectionError": "You seem to be offline.\nPlease try again!",
+    "genericError": "Something went wrong.\nPlease try again!",
+    "loginFailAlertTitle": "Unable to log in"
 }

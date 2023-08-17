@@ -12,21 +12,25 @@ class LoginForm extends ConsumerStatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() => _LoginFormState();
+  ConsumerState<LoginForm> createState() => _LoginFormState();
 }
 
 class _LoginFormState extends ConsumerState<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   bool _isFormSubmitted = false;
 
   TextFormField get _emailTextField => TextFormField(
         keyboardType: TextInputType.emailAddress,
         autocorrect: false,
         decoration: PrimaryTextFieldDecoration(
-          hintText: context.localizations?.emailInputHint,
+          hintText: context.localizations.emailInputHint,
           hintTextStyle: context.textTheme.bodyMedium,
         ),
         style: context.textTheme.bodyMedium,
+        controller: _emailController,
         validator: _validateEmail,
         autovalidateMode: _isFormSubmitted
             ? AutovalidateMode.onUserInteraction
@@ -37,10 +41,11 @@ class _LoginFormState extends ConsumerState<LoginForm> {
         autocorrect: false,
         obscureText: true,
         decoration: PrimaryTextFieldDecoration(
-          hintText: context.localizations?.passwordInputHint,
+          hintText: context.localizations.passwordInputHint,
           hintTextStyle: context.textTheme.bodyMedium,
         ),
         style: context.textTheme.bodyMedium,
+        controller: _passwordController,
         validator: _validatePassword,
         autovalidateMode: _isFormSubmitted
             ? AutovalidateMode.onUserInteraction
@@ -50,29 +55,36 @@ class _LoginFormState extends ConsumerState<LoginForm> {
   ElevatedButton get _loginButton => ElevatedButton(
         style: PrimaryButtonStyle(hintTextStyle: context.textTheme.labelMedium),
         onPressed: _submit,
-        child: Text(context.localizations?.loginButton ?? ''),
+        child: Text(context.localizations.loginButton),
       );
 
   String? _validateEmail(String? email) {
     if (!ref.read(loginViewModelProvider.notifier).isValidEmail(email)) {
-      return context.localizations?.invalidEmailError;
+      return context.localizations.invalidEmailError;
     }
     return null;
   }
 
   String? _validatePassword(String? password) {
     if (!ref.read(loginViewModelProvider.notifier).isValidPassword(password)) {
-      return context.localizations?.invalidPasswordError;
+      return context.localizations.invalidPasswordError;
     }
     return null;
   }
 
   void _submit() {
     setState(() => _isFormSubmitted = true);
-    if (_formKey.currentState?.validate() == true) {
-      context.dismissKeyboard();
-      // TODO: Integrate with API
+    final isFormValidated = _formKey.currentState?.validate() ?? false;
+
+    if (!isFormValidated) {
+      return;
     }
+
+    context.dismissKeyboard();
+    ref.read(loginViewModelProvider.notifier).login(
+          email: _emailController.text,
+          password: _passwordController.text,
+        );
   }
 
   @override
