@@ -21,6 +21,15 @@ class MetaResponse {
   factory MetaResponse.fromJson(Map<String, dynamic> json) =>
       _$MetaResponseFromJson(ResponseDecoder.decode(json));
 
+  static MetaResponse dummy() {
+    return MetaResponse(
+      page: 0,
+      pages: 0,
+      pageSize: 0,
+      records: 0,
+    );
+  }
+
   MetaModel toMetaModel() => MetaModel(
         page: page ?? 0,
         pages: pages ?? 0,

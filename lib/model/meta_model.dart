@@ -13,7 +13,7 @@ class MetaModel extends Equatable {
     required this.records,
   });
 
-  const MetaModel.empty()
+  const MetaModel.dummy()
       : this(
           page: 0,
           pages: 0,

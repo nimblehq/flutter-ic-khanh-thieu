@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:survey_flutter/model/surveys_container_model.dart';
 import 'package:survey_flutter/repositories/survey_repository.dart';
 
@@ -14,7 +13,6 @@ class SurveysParams {
   });
 }
 
-@Injectable()
 class GetSurveysUseCase extends UseCase<SurveysContainerModel, SurveysParams> {
   final SurveyRepository _repository;
 

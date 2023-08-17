@@ -11,10 +11,10 @@ class SurveysContainerModel extends Equatable {
     required this.meta,
   });
 
-  SurveysContainerModel.empty()
+  SurveysContainerModel.dummy()
       : this(
           surveys: List.empty(),
-          meta: const MetaModel.empty(),
+          meta: const MetaModel.dummy(),
         );
 
   @override
