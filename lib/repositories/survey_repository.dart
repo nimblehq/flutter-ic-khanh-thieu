@@ -1,4 +1,3 @@
-import 'package:injectable/injectable.dart';
 import 'package:survey_flutter/api/exception/network_exceptions.dart';
 import 'package:survey_flutter/api/survey_api_service.dart';
 import 'package:survey_flutter/model/surveys_container_model.dart';
@@ -10,7 +9,6 @@ abstract class SurveyRepository {
   });
 }
 
-@LazySingleton(as: SurveyRepository)
 class SurveyRepositoryImpl extends SurveyRepository {
   final SurveyApiService _apiService;
 
