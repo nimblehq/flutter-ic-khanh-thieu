@@ -2,7 +2,9 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
+import 'package:survey_flutter/screens/home/home_screen.dart';
 import 'package:survey_flutter/screens/login/login_form.dart';
 import 'package:survey_flutter/screens/login/login_view_model.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
@@ -115,23 +117,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
   _setUpListener(BuildContext context) {
     ref.listen<AsyncValue<void>>(loginViewModelProvider, (_, next) {
       next.maybeWhen(
-        data: (_) {
-          // TODO: Navigate to the Home screen
-          showAlertDialog(
-            context: context,
-            title: 'Login Successfully',
-            message: 'You are now logged in!',
-            actions: [
-              TextButton(
-                style: ButtonStyle(
-                  foregroundColor: MaterialStateProperty.all(Colors.black),
-                ),
-                child: Text(context.localizations.okText),
-                onPressed: () => Navigator.pop(context),
-              )
-            ],
-          );
-        },
+        data: (_) => context.go(routePathHomeScreen),
         error: (error, _) {
           showAlertDialog(
             context: context,
