@@ -15,19 +15,14 @@ class SecureStorageImpl extends SecureStorage {
   SecureStorageImpl(this._storage);
 
   @override
-  Future<M> get<M extends SecureStorageModel>(
-      {required String value, required SecureStorageKey key}) async {
+  Future<M> getValue<M extends SecureStorageModel>(
+      {required SecureStorageKey key}) async {
     final rawValue = await _storage.read(key: key.string);
     if (rawValue == null) {
-      throw SecureStorageError.failToRead;
+      throw SecureStorageError.failToGetValue;
     }
 
-    final decodedValue = await jsonDecode(rawValue);
-    if (decodedValue == null) {
-      throw SecureStorageError.failToParse;
-    }
-
-    return decodedValue;
+    return await jsonDecode(rawValue);
   }
 
   @override

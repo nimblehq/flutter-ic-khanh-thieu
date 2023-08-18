@@ -14,13 +14,12 @@ extension SecureStorageKeyExt on SecureStorageKey {
 abstract class SecureStorageModel {}
 
 enum SecureStorageError {
-  failToRead,
-  failToParse,
+  failToGetValue,
 }
 
 abstract class SecureStorage {
   Future<void> save<M extends SecureStorageModel>(
       {required M value, required SecureStorageKey key});
-  Future<M> get<M extends SecureStorageModel>(
-      {required String value, required SecureStorageKey key});
+  Future<M> getValue<M extends SecureStorageModel>(
+      {required SecureStorageKey key});
 }
