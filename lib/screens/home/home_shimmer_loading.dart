@@ -11,7 +11,7 @@ class HomeShimmerLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.sizeOf(context).width;
 
     return Shimmer.fromColors(
       baseColor: Colors.white.withOpacity(0.12),

@@ -4,14 +4,17 @@ import 'package:survey_flutter/screens/home/home_pages_widget.dart';
 import 'package:survey_flutter/screens/home/home_page_indicator_widget.dart';
 import 'package:survey_flutter/screens/home/home_shimmer_loading.dart';
 
+const routePathHomeScreen = '/home';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  HomeScreenState createState() => HomeScreenState();
+  // ignore: library_private_types_in_public_api
+  _HomeScreenState createState() => _HomeScreenState();
 }
 
-class HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   bool _isLoading = true;
 
   @override
