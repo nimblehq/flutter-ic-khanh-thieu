@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_flutter/model/response/login_response.dart';
 import 'package:survey_flutter/storage/secure_storage.dart';
 
 part 'api_token.g.dart';
@@ -23,12 +22,6 @@ class ApiToken extends SecureStorageModel {
       _$ApiTokenFromJson(json);
 
   Map<String, dynamic> toJson() => _$ApiTokenToJson(this);
-
-  static ApiToken from(LoginResponse loginResponse) => ApiToken(
-        accessToken: loginResponse.accessToken,
-        refreshToken: loginResponse.refreshToken,
-        tokenType: loginResponse.tokenType,
-      );
 
   @override
   bool operator ==(Object other) =>

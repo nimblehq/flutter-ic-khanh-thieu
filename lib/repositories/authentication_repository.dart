@@ -3,7 +3,6 @@ import 'package:survey_flutter/api/authentication_api_service.dart';
 import 'package:survey_flutter/api/exception/network_exceptions.dart';
 import 'package:survey_flutter/di/provider/dio_provider.dart';
 import 'package:survey_flutter/env.dart';
-import 'package:survey_flutter/model/api_token.dart';
 import 'package:survey_flutter/model/login_model.dart';
 import 'package:survey_flutter/model/request/login_request.dart';
 import 'package:survey_flutter/storage/secure_storage.dart';
@@ -49,7 +48,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
         grantType: _grantType,
       ));
       await _secureStorage.save(
-        value: ApiToken.from(response),
+        value: response.toApiToken(),
         key: SecureStorageKey.apiToken,
       );
       return response.toLoginModel();

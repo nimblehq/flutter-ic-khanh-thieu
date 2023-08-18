@@ -2,7 +2,6 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:survey_flutter/api/exception/network_exceptions.dart';
-import 'package:survey_flutter/model/api_token.dart';
 import 'package:survey_flutter/model/response/login_response.dart';
 import 'package:survey_flutter/repositories/authentication_repository.dart';
 import 'package:survey_flutter/storage/secure_storage.dart';
@@ -46,7 +45,7 @@ void main() {
       expect(result, loginResponse.toLoginModel());
       verify(
         mockSecureStorage.save(
-          value: ApiToken.from(loginResponse),
+          value: loginResponse.toApiToken(),
           key: SecureStorageKey.apiToken,
         ),
       ).called(1);
