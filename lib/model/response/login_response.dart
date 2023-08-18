@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:survey_flutter/api/response_decoder.dart';
+import 'package:survey_flutter/model/api_token.dart';
 import 'package:survey_flutter/model/login_model.dart';
 
 part 'login_response.g.dart';
@@ -30,6 +31,12 @@ class LoginResponse {
         accessToken: accessToken,
         expiresIn: expiresIn,
         refreshToken: refreshToken,
+      );
+
+  ApiToken toApiToken() => ApiToken(
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        tokenType: tokenType,
       );
 
   static LoginResponse dummy() {
