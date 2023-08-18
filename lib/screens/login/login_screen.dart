@@ -1,21 +1,27 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
+import 'package:survey_flutter/screens/home/home_screen.dart';
 import 'package:survey_flutter/screens/login/login_form.dart';
+import 'package:survey_flutter/screens/login/login_view_model.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
+import 'package:survey_flutter/uimodels/app_error.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
+import 'package:survey_flutter/widgets/alert_dialog.dart';
 
 const routePathLoginScreen = '/login';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>
+class _LoginScreenState extends ConsumerState<LoginScreen>
     with TickerProviderStateMixin {
   final _animationDuration = const Duration(milliseconds: 600);
 
@@ -108,8 +114,34 @@ class _LoginScreenState extends State<LoginScreen>
     ),
   );
 
+  _setUpListener(BuildContext context) {
+    ref.listen<AsyncValue<void>>(loginViewModelProvider, (_, next) {
+      next.maybeWhen(
+        data: (_) => context.go(routePathHomeScreen),
+        error: (error, _) {
+          showAlertDialog(
+            context: context,
+            title: context.localizations.loginFailAlertTitle,
+            message: (error as AppError?)?.description(context) ?? '',
+            actions: [
+              TextButton(
+                style: ButtonStyle(
+                  foregroundColor: MaterialStateProperty.all(Colors.black),
+                ),
+                child: Text(context.localizations.okText),
+                onPressed: () => Navigator.pop(context),
+              )
+            ],
+          );
+        },
+        orElse: () {},
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    _setUpListener(context);
     return GestureDetector(
       onTap: () => context.dismissKeyboard(),
       child: Scaffold(
