@@ -18,8 +18,7 @@ class SurveysContainerResponse {
   });
 
   factory SurveysContainerResponse.fromJson(Map<String, dynamic> json) {
-    return _$SurveysContainerResponseFromJson(
-        ResponseDecoder.decodeAtRoot(json));
+    return _$SurveysContainerResponseFromJson(ResponseDecoder.decode(json));
   }
 
   SurveysContainerModel toSurveysContainerModel() => SurveysContainerModel(

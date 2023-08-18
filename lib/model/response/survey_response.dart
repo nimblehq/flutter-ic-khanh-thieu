@@ -20,7 +20,7 @@ class SurveyResponse {
   });
 
   factory SurveyResponse.fromJson(Map<String, dynamic> json) =>
-      _$SurveyResponseFromJson(ResponseDecoder.decode(json));
+      _$SurveyResponseFromJson(ResponseDecoder.decodeData(json));
 
   SurveyModel toSurveyModel() => SurveyModel(
         id: id ?? '',
