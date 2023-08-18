@@ -1,15 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey_flutter/api/exception/network_exceptions.dart';
 import 'package:survey_flutter/uimodels/app_error.dart';
+import 'package:survey_flutter/usecases/base/base_use_case.dart';
+import 'package:survey_flutter/usecases/login_use_case.dart';
 import 'package:survey_flutter/utils/internet_connection_manager.dart';
 
 final loginViewModelProvider =
     AsyncNotifierProvider.autoDispose<LoginViewModel, void>(LoginViewModel.new);
 
 class LoginViewModel extends AutoDisposeAsyncNotifier<void> {
-  late InternetConnectionManager internetConnectionManager;
-
   bool isValidEmail(String? email) {
     // Just use a simple rule, no fancy Regex!
     return !(email == null || !email.contains('@'));
@@ -24,31 +25,49 @@ class LoginViewModel extends AutoDisposeAsyncNotifier<void> {
     required String password,
   }) async {
     state = const AsyncLoading();
-    // TODO: Integrate with API
+    final loginUseCase = ref.read(loginUseCaseProvider);
+    final result = await loginUseCase(
+      LoginParams(
+        email: email,
+        password: password,
+      ),
+    );
 
-    // Handling error part:
+    if (result is Failed) {
+      final error = result as Failed;
+      final exception = error.exception.actualException as NetworkExceptions;
 
-    // If it returns unauthorized error (401)
-    //state = const AsyncError(
-    //  AppError.unauthorized,
-    //  StackTrace.empty,
-    //);
+      if (exception is BadRequest || exception is UnauthorisedRequest) {
+        state = const AsyncError(
+          AppError.unauthorized,
+          StackTrace.empty,
+        );
+        return;
+      } else if (exception is RequestTimeout) {
+        final isConnected = await _hasInternetConnection();
+        if (!isConnected) {
+          state = const AsyncError(
+            AppError.noInternetConnection,
+            StackTrace.empty,
+          );
+          return;
+        }
+      }
 
-    // If it returns timeout error, then check Internet connection
-    internetConnectionManager = ref.read(internetConnectionManagerProvider);
-    final isConnected = await internetConnectionManager.hasConnection();
-
-    if (!isConnected) {
-      state = const AsyncError(
-        AppError.noInternetConnection,
-        StackTrace.empty,
-      );
-    } else {
       state = const AsyncError(
         AppError.generic,
         StackTrace.empty,
       );
+      return;
     }
+
+    state = const AsyncData(null);
+  }
+
+  Future<bool> _hasInternetConnection() async {
+    final internetConnectionManager =
+        ref.read(internetConnectionManagerProvider);
+    return await internetConnectionManager.hasConnection();
   }
 
   @override

@@ -1,11 +1,19 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:survey_flutter/api/authentication_api_service.dart';
 import 'package:survey_flutter/api/exception/network_exceptions.dart';
+import 'package:survey_flutter/di/provider/dio_provider.dart';
 import 'package:survey_flutter/env.dart';
 import 'package:survey_flutter/model/login_model.dart';
 import 'package:survey_flutter/model/request/login_request.dart';
-import 'package:injectable/injectable.dart';
 
 const String _grantType = "password";
+
+final authenticationRepositoryProvider =
+    Provider<AuthenticationRepository>((_) {
+  return AuthenticationRepositoryImpl(
+    AuthenticationApiService(DioProvider().getDio()),
+  );
+});
 
 abstract class AuthenticationRepository {
   Future<LoginModel> login({
@@ -14,7 +22,6 @@ abstract class AuthenticationRepository {
   });
 }
 
-@Singleton(as: AuthenticationRepository)
 class AuthenticationRepositoryImpl extends AuthenticationRepository {
   final AuthenticationApiService _authenticationApiService;
 

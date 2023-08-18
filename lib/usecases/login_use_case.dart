@@ -1,8 +1,12 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'dart:async';
 import 'package:survey_flutter/model/login_model.dart';
 import 'package:survey_flutter/repositories/authentication_repository.dart';
 import 'package:survey_flutter/usecases/base/base_use_case.dart';
-import 'package:injectable/injectable.dart';
+
+final loginUseCaseProvider = Provider<LoginUseCase>((ref) {
+  return LoginUseCase(ref.watch(authenticationRepositoryProvider));
+});
 
 class LoginParams {
   final String email;
@@ -14,7 +18,6 @@ class LoginParams {
   });
 }
 
-@Injectable()
 class LoginUseCase extends UseCase<LoginModel, LoginParams> {
   final AuthenticationRepository _repository;
 
