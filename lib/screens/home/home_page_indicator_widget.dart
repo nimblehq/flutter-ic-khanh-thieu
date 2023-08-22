@@ -9,19 +9,29 @@ const dotIndicatorSize = Size(
 );
 
 class HomePageIndicatorWidget extends StatelessWidget {
-  const HomePageIndicatorWidget({Key? key}) : super(key: key);
+  final int surveysLength;
+  final ValueNotifier<int> currentPage;
+
+  const HomePageIndicatorWidget({
+    Key? key,
+    required this.surveysLength,
+    required this.currentPage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // TODO: currentItem and count handled in Integrate
-    return PageViewDotIndicator(
-      currentItem: 1,
-      count: 3,
-      selectedColor: Colors.white,
-      unselectedColor: Colors.white.withOpacity(_opacityUnselectedColor),
-      size: dotIndicatorSize,
-      unselectedSize: dotIndicatorSize,
-      alignment: Alignment.bottomLeft,
-    );
+    return ValueListenableBuilder(
+        valueListenable: currentPage,
+        builder: (BuildContext context, int value, Widget? child) {
+          return PageViewDotIndicator(
+            currentItem: currentPage.value,
+            count: surveysLength,
+            selectedColor: Colors.white,
+            unselectedColor: Colors.white.withOpacity(_opacityUnselectedColor),
+            size: dotIndicatorSize,
+            unselectedSize: dotIndicatorSize,
+            alignment: Alignment.bottomLeft,
+          );
+        });
   }
 }

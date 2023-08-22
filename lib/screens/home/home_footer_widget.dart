@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
+import 'package:survey_flutter/model/survey_model.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
 
@@ -7,9 +8,13 @@ const _descriptionOpacity = 0.7;
 const _buttonSize = 56.0;
 
 class HomeFooterWidget extends StatelessWidget {
+  final SurveyModel survey;
+  final VoidCallback onNextButtonPressed;
+
   const HomeFooterWidget({
     Key? key,
-    required VoidCallback onNextButtonPressed,
+    required this.survey,
+    required this.onNextButtonPressed,
   }) : super(key: key);
 
   @override
@@ -28,21 +33,19 @@ class HomeFooterWidget extends StatelessWidget {
   }
 
   Widget _buildTitle(BuildContext context) {
-    // TODO: Replace with survey title
     return Text(
-      "Working from home Check-In",
+      survey.title,
       style: context.textTheme.titleMedium,
       maxLines: 2,
     );
   }
 
   Widget _buildDescription(BuildContext context) {
-    // TODO: Replace with survey description
     return Row(
       children: [
         Expanded(
           child: Text(
-            "We would like to know how you feel about our work from home...",
+            survey.description,
             style: context.textTheme.bodyMedium?.copyWith(
                 color: Colors.white.withOpacity(_descriptionOpacity)),
             maxLines: 2,
@@ -63,13 +66,11 @@ class HomeFooterWidget extends StatelessWidget {
           backgroundColor: Colors.white,
           foregroundColor: Colors.black12,
         ),
+        onPressed: onNextButtonPressed,
         child: Image.asset(
           Assets.images.next.path,
           color: Colors.black,
         ),
-        onPressed: () {
-          // TODO: Handle the next button pressed event
-        },
       ),
     );
   }

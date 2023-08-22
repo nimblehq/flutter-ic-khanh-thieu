@@ -1,23 +1,35 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:survey_flutter/model/api_token.dart';
+import 'package:survey_flutter/storage/secure_storage.dart';
+
+const String _headerAuthorization = 'Authorization';
 
 class AppInterceptor extends Interceptor {
   final bool _requireAuthenticate;
   final Dio _dio;
+  final SecureStorage? _secureStorage;
 
-  AppInterceptor(
-    this._requireAuthenticate,
-    this._dio,
-  );
+  AppInterceptor(this._requireAuthenticate, this._dio, this._secureStorage);
 
   @override
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     if (_requireAuthenticate) {
-      // TODO header authorization here
-      // options.headers
-      //     .putIfAbsent(HEADER_AUTHORIZATION, () => "");
+      final apiTokenModel =
+          await _secureStorage?.getValue(key: SecureStorageKey.apiToken);
+      if (apiTokenModel is ApiToken) {
+        final accessToken = apiTokenModel.accessToken;
+        final tokenType = apiTokenModel.tokenType;
+
+
+        if (accessToken.isNotEmpty && tokenType.isNotEmpty) {
+          final authorizationHeader = '$tokenType $accessToken';
+          options.headers
+              .putIfAbsent(_headerAuthorization, () => authorizationHeader);
+        }
+    }
     }
     return super.onRequest(options, handler);
   }

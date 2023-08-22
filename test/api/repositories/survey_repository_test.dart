@@ -10,11 +10,14 @@ import '../../mocks/generate_mocks.mocks.dart';
 void main() {
   group('SurveyRepository', () {
     late MockSurveyApiService mockSurveyApiService;
+    late MockSurveyStorage mockSurveyStorage;
     late SurveyRepositoryImpl surveyRepository;
 
     setUp(() {
       mockSurveyApiService = MockSurveyApiService();
-      surveyRepository = SurveyRepositoryImpl(mockSurveyApiService);
+      mockSurveyStorage = MockSurveyStorage();
+      surveyRepository = SurveyRepositoryImpl(
+          mockSurveyApiService, mockSurveyStorage);
     });
 
     test('when getting surveys is successful returns SurveysContainerModel',

@@ -9,5 +9,6 @@
     "noInternetConnectionError": "You seem to be offline.\nPlease try again!",
     "genericError": "Something went wrong.\nPlease try again!",
     "loginFailAlertTitle": "Unable to log in",
-    "today": "Today"
+    "today": "Today",
+    "errorText": "Error"
 }
