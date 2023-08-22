@@ -1,6 +1,17 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey_flutter/api/data_sources/token_data_source.dart';
 import 'package:survey_flutter/api/exception/network_exceptions.dart';
 import 'package:survey_flutter/api/survey_api_service.dart';
+import 'package:survey_flutter/di/provider/dio_provider.dart';
 import 'package:survey_flutter/model/surveys_container_model.dart';
+
+final surveyRepositoryProvider = Provider<SurveyRepository>((ref) {
+  return SurveyRepositoryImpl(
+    SurveyApiService(DioProvider().getAuthorizedDio(
+      tokenDataSource: ref.watch(tokenDataSourceProvider),
+    )),
+  );
+});
 
 abstract class SurveyRepository {
   Future<SurveysContainerModel> getSurveys({
