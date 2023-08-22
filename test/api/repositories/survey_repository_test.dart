@@ -31,7 +31,7 @@ void main() {
 
       final result =
           await surveyRepository.getSurveys(pageSize: 0, pageNumber: 0);
-      expect(result, surveysResponse.toSurveysContainerModel());
+      expect(result, surveysResponse.toSurveysContainerModel().surveys);
     });
 
     test('when getting surveys fails throws NetworkExceptions', () async {

@@ -17,19 +17,9 @@ class AppInterceptor extends Interceptor {
   Future onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     if (_requireAuthenticate) {
-      final apiTokenModel =
-          await _secureStorage?.getValue(key: SecureStorageKey.apiToken);
-      if (apiTokenModel is ApiToken) {
-        final accessToken = apiTokenModel.accessToken;
-        final tokenType = apiTokenModel.tokenType;
-
-
-        if (accessToken.isNotEmpty && tokenType.isNotEmpty) {
-          final authorizationHeader = '$tokenType $accessToken';
-          options.headers
-              .putIfAbsent(_headerAuthorization, () => authorizationHeader);
-        }
-    }
+      // TODO header authorization here
+      // options.headers
+      //     .putIfAbsent(HEADER_AUTHORIZATION, () => "");
     }
     return super.onRequest(options, handler);
   }

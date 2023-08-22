@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:survey_flutter/model/survey_model.dart';
@@ -56,20 +54,20 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final errorMessage = ref.watch(_errorStreamProvider).value ?? "";
 
     if (errorMessage.isNotEmpty) {
-        showAlertDialog(
-          context: context,
-          title: context.localizations.errorText,
-          message: errorMessage,
-          actions: [
-            TextButton(
-              style: ButtonStyle(
-                foregroundColor: MaterialStateProperty.all(Colors.black),
-              ),
-              child: Text(context.localizations.okText),
-              onPressed: () => Navigator.pop(context),
-            )
-          ],
-        );
+      showAlertDialog(
+        context: context,
+        title: context.localizations.errorText,
+        message: errorMessage,
+        actions: [
+          TextButton(
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(Colors.black),
+            ),
+            child: Text(context.localizations.okText),
+            onPressed: () => Navigator.pop(context),
+          )
+        ],
+      );
     }
     return Scaffold(
       body: Stack(

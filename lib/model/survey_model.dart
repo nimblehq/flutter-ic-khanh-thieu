@@ -38,4 +38,12 @@ class SurveyModel extends Equatable {
         description: description,
         coverImageUrl: coverImageUrl,
       );
+
+  const SurveyModel.dummy()
+      : this(
+          id: "id",
+          title: "title",
+          description: "description",
+          coverImageUrl: "coverImageUrl",
+        );
 }

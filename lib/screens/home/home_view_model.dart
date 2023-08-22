@@ -53,7 +53,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
     }
   }
 
-  void loadCachedSurveys() async {    
+  void loadCachedSurveys() async {
     final result = await _getCachedSurveysUseCase.call();
     if (result is Success<List<SurveyModel>>) {
       final cachedSurveys =
