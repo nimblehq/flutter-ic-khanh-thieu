@@ -77,11 +77,11 @@ void main() {
 
     group('Overwrite token', () {
       test(
-          'When calling overwriteToken, it calls secureStorage to save the same token',
+          'When calling setToken, it calls secureStorage to save the same token',
           () async {
         final tokenResponse = TokenResponse.dummy();
         final apiToken = tokenResponse.toApiToken();
-        await tokenDataSource.overwriteToken(apiToken);
+        await tokenDataSource.setToken(apiToken);
         verify(
           mockSecureStorage.save(
               value: apiToken, key: SecureStorageKey.apiToken),

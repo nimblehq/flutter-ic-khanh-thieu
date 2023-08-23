@@ -46,7 +46,7 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
         clientSecret: Env.clientSecret,
         grantType: _grantType,
       ));
-      await _tokenDataSource.overwriteToken(response.toApiToken());
+      await _tokenDataSource.setToken(response.toApiToken());
       return response.toLoginModel();
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);

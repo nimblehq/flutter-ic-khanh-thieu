@@ -43,7 +43,7 @@ void main() {
 
       expect(result, loginResponse.toLoginModel());
       verify(
-        mockTokenDataSource.overwriteToken(
+        mockTokenDataSource.setToken(
           loginResponse.toApiToken(),
         ),
       ).called(1);

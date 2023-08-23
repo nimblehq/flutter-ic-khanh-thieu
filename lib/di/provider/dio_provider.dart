@@ -21,15 +21,15 @@ class DioProvider {
     required TokenDataSource tokenDataSource,
   }) {
     _tokenDataSource = tokenDataSource;
-    _authorizedDio ??= _createDio(requireAuthenticate: true);
+    _authorizedDio ??= _createDio(requireAuthentication: true);
     return _authorizedDio!;
   }
 
-  Dio _createDio({bool requireAuthenticate = false}) {
+  Dio _createDio({bool requireAuthentication = false}) {
     final dio = Dio();
 
     final interceptors = <Interceptor>[];
-    if (requireAuthenticate) {
+    if (requireAuthentication) {
       final authInterceptor = AuthInterceptor(
         dio,
         _tokenDataSource!,

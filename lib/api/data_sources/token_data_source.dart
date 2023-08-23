@@ -14,7 +14,7 @@ final tokenDataSourceProvider = Provider<TokenDataSource>((ref) {
 
 abstract class TokenDataSource {
   Future<ApiToken> getToken({bool forceRefresh});
-  Future<void> overwriteToken(ApiToken token);
+  Future<void> setToken(ApiToken token);
 }
 
 class TokenDataSourceImpl extends TokenDataSource {
@@ -50,7 +50,7 @@ class TokenDataSourceImpl extends TokenDataSource {
   }
 
   @override
-  Future<void> overwriteToken(ApiToken token) async {
+  Future<void> setToken(ApiToken token) async {
     await _secureStorage.save(value: token, key: SecureStorageKey.apiToken);
   }
 }

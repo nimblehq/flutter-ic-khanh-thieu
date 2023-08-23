@@ -17,7 +17,9 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onRequest(
-      RequestOptions options, RequestInterceptorHandler handler) async {
+    RequestOptions options,
+    RequestInterceptorHandler handler,
+  ) async {
     final token = await _tokenDataSource.getToken();
     options.headers.putIfAbsent(
         _headerAuthorization, () => "${token.tokenType} ${token.accessToken}");
@@ -25,7 +27,10 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
+  void onError(
+    DioError err,
+    ErrorInterceptorHandler handler,
+  ) {
     final statusCode = err.response?.statusCode;
     final requestOptions = err.requestOptions;
 
@@ -41,7 +46,9 @@ class AuthInterceptor extends Interceptor {
   }
 
   Future<void> _refreshTokenAndRetry(
-      RequestOptions options, ErrorInterceptorHandler handler) async {
+    RequestOptions options,
+    ErrorInterceptorHandler handler,
+  ) async {
     final token = await _tokenDataSource.getToken(forceRefresh: true);
     final headers = options.headers;
     headers[_headerAuthorization] = "${token.tokenType} ${token.accessToken}";
