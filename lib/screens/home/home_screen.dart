@@ -41,7 +41,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return ref.watch(homeViewModelProvider).when(
-          init: () => _buildHomeScreen(isLoading: true),
           loading: () => _buildHomeScreen(isLoading: true),
           error: () => _buildHomeScreen(),
           loadCachedSurveysSuccess: () => _buildHomeScreen(),

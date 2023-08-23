@@ -47,7 +47,6 @@ class AuthenticationRepositoryImpl extends AuthenticationRepository {
         grantType: _grantType,
       ));
       await _tokenDataSource.setToken(response.toApiToken());
-      print("@@@ settoken ${response.toApiToken()}");
       return response.toLoginModel();
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);

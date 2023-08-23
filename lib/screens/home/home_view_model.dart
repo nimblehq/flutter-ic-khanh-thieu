@@ -7,6 +7,7 @@ import 'package:survey_flutter/usecases/base/base_use_case.dart';
 import 'package:survey_flutter/usecases/get_cached_surveys_use_case.dart';
 import 'package:survey_flutter/usecases/get_surveys_use_case.dart';
 
+// TODO: Integrate load more
 const _pageNumber = 1;
 const _pageSize = 10;
 
@@ -30,7 +31,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
     required GetCachedSurveysUseCase getCachedSurveysUseCase,
   })  : _getSurveysUseCase = getSurveysUseCase,
         _getCachedSurveysUseCase = getCachedSurveysUseCase,
-        super(const HomeState.init());
+        super(const HomeState.loading());
 
   final _surveys = StreamController<List<SurveyModel>>();
   Stream<List<SurveyModel>> get surveys => _surveys.stream;

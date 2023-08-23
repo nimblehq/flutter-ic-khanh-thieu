@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:survey_flutter/model/api_token.dart';
 import 'package:survey_flutter/storage/secure_storage.dart';
 
 import '../di/provider/flutter_secure_storage.dart';
@@ -21,8 +22,13 @@ class SecureStorageImpl extends SecureStorage {
     if (rawValue == null) {
       throw SecureStorageError.failToGetValue;
     }
+    final jsonValue = await jsonDecode(rawValue);
 
-    return await jsonDecode(rawValue);
+    if (M == ApiToken) {
+      return ApiToken.fromJson(jsonValue) as M;
+    } else {
+      throw ArgumentError('Invalid SecureStorageModel type');
+    }
   }
 
   @override

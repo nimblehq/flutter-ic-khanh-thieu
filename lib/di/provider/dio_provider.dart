@@ -27,6 +27,7 @@ class DioProvider {
 
   Dio _createDio({bool requireAuthentication = false}) {
     final dio = Dio();
+
     final interceptors = <Interceptor>[];
     if (requireAuthentication) {
       final authInterceptor = AuthInterceptor(

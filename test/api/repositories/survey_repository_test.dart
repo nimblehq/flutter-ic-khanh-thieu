@@ -16,8 +16,8 @@ void main() {
     setUp(() {
       mockSurveyApiService = MockSurveyApiService();
       mockSurveyStorage = MockSurveyStorage();
-      surveyRepository = SurveyRepositoryImpl(
-          mockSurveyApiService, mockSurveyStorage);
+      surveyRepository =
+          SurveyRepositoryImpl(mockSurveyApiService, mockSurveyStorage);
     });
 
     test('when getting surveys is successful returns SurveysContainerModel',

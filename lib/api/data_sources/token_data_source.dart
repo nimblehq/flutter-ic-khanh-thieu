@@ -45,8 +45,8 @@ class TokenDataSourceImpl extends TokenDataSource {
       return apiToken;
     }
 
-    return await _secureStorage.getValue(key: SecureStorageKey.apiToken)
-        as ApiToken;
+    return await _secureStorage.getValue<ApiToken>(
+        key: SecureStorageKey.apiToken);
   }
 
   @override
