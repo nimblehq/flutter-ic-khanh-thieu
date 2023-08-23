@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:survey_flutter/api/data_sources/token_data_source.dart';
 import 'package:survey_flutter/api/interceptor/auth_interceptor.dart';
 import 'package:survey_flutter/env.dart';
-import 'package:survey_flutter/storage/secure_storage.dart';
 
 const String _headerContentType = 'Content-Type';
 const String _defaultContentType = 'application/json; charset=utf-8';

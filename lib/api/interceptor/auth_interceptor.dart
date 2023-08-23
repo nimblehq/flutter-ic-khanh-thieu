@@ -20,7 +20,9 @@ class AuthInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    print("@@@ get 1");
     final token = await _tokenDataSource.getToken();
+    print("@@@ get here $token");
     options.headers.putIfAbsent(
         _headerAuthorization, () => "${token.tokenType} ${token.accessToken}");
     super.onRequest(options, handler);
