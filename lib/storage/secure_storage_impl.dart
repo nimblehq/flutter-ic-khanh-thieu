@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:survey_flutter/model/api_token.dart';
 import 'package:survey_flutter/storage/secure_storage.dart';
+import 'package:survey_flutter/utils/serializer/serializable.dart';
 
 import '../di/provider/flutter_secure_storage.dart';
 
@@ -16,24 +17,23 @@ class SecureStorageImpl extends SecureStorage {
   SecureStorageImpl(this._storage);
 
   @override
-  Future<M> getValue<M extends SecureStorageModel>(
-      {required SecureStorageKey key}) async {
+  Future<M> getValue<M extends Serializable>({
+    required SecureStorageKey key,
+    required Serializer<M> serializer,
+  }) async {
     final rawValue = await _storage.read(key: key.string);
     if (rawValue == null) {
       throw SecureStorageError.failToGetValue;
     }
     final jsonValue = await jsonDecode(rawValue);
-
-    if (M == ApiToken) {
-      return ApiToken.fromJson(jsonValue) as M;
-    } else {
-      throw ArgumentError('Invalid SecureStorageModel type');
-    }
+    return serializer.fromJson(jsonValue);
   }
 
   @override
-  Future<void> save<M extends SecureStorageModel>(
-      {required M value, required SecureStorageKey key}) async {
+  Future<void> save<M extends Serializable>({
+    required M value,
+    required SecureStorageKey key,
+  }) async {
     final encodedValue = jsonEncode(value);
     await _storage.write(key: key.string, value: encodedValue);
   }

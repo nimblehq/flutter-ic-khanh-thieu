@@ -1,3 +1,5 @@
+import 'package:survey_flutter/utils/serializer/serializable.dart';
+
 enum SecureStorageKey {
   apiToken,
 }
@@ -11,15 +13,13 @@ extension SecureStorageKeyExt on SecureStorageKey {
   }
 }
 
-abstract class SecureStorageModel {}
-
 enum SecureStorageError {
   failToGetValue,
 }
 
 abstract class SecureStorage {
-  Future<void> save<M extends SecureStorageModel>(
+  Future<void> save<M extends Serializable>(
       {required M value, required SecureStorageKey key});
-  Future<M> getValue<M extends SecureStorageModel>(
-      {required SecureStorageKey key});
+  Future<M> getValue<M extends Serializable>(
+      {required SecureStorageKey key, required Serializer<M> serializer});
 }
