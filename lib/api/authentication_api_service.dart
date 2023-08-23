@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:survey_flutter/model/request/login_request.dart';
-import 'package:survey_flutter/model/response/login_response.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:survey_flutter/model/request/login_request.dart';
+import 'package:survey_flutter/model/request/refresh_token_request.dart';
+import 'package:survey_flutter/model/response/token_response.dart';
 
 part 'authentication_api_service.g.dart';
 
@@ -11,7 +12,12 @@ abstract class AuthenticationApiService {
       _AuthenticationApiService;
 
   @POST('/oauth/token')
-  Future<LoginResponse> login(
-    @Body() LoginRequest body,
+  Future<TokenResponse> login(
+    @Body() LoginRequest loginRequest,
+  );
+
+  @POST('/oauth/token')
+  Future<TokenResponse> refreshToken(
+    @Body() RefreshTokenRequest refreshTokenRequest,
   );
 }

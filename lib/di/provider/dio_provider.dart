@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:survey_flutter/di/interceptor/app_interceptor.dart';
+import 'package:survey_flutter/api/data_sources/token_data_source.dart';
+import 'package:survey_flutter/api/interceptor/auth_interceptor.dart';
 import 'package:survey_flutter/env.dart';
 
 const String _headerContentType = 'Content-Type';
@@ -8,20 +9,33 @@ const String _defaultContentType = 'application/json; charset=utf-8';
 
 class DioProvider {
   Dio? _dio;
+  Dio? _authorizedDio;
+  TokenDataSource? _tokenDataSource;
 
   Dio getDio() {
     _dio ??= _createDio();
     return _dio!;
   }
 
-  Dio _createDio({bool requireAuthenticate = false}) {
+  Dio getAuthorizedDio({
+    required TokenDataSource tokenDataSource,
+  }) {
+    _tokenDataSource = tokenDataSource;
+    _authorizedDio ??= _createDio(requireAuthentication: true);
+    return _authorizedDio!;
+  }
+
+  Dio _createDio({bool requireAuthentication = false}) {
     final dio = Dio();
-    final appInterceptor = AppInterceptor(
-      requireAuthenticate,
-      dio,
-    );
+
     final interceptors = <Interceptor>[];
-    interceptors.add(appInterceptor);
+    if (requireAuthentication) {
+      final authInterceptor = AuthInterceptor(
+        dio,
+        _tokenDataSource!,
+      );
+      interceptors.add(authInterceptor);
+    }
     if (!kReleaseMode) {
       interceptors.add(LogInterceptor(
         request: true,
