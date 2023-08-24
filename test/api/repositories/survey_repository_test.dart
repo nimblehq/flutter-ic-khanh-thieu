@@ -10,11 +10,14 @@ import '../../mocks/generate_mocks.mocks.dart';
 void main() {
   group('SurveyRepository', () {
     late MockSurveyApiService mockSurveyApiService;
+    late MockSurveyStorage mockSurveyStorage;
     late SurveyRepositoryImpl surveyRepository;
 
     setUp(() {
       mockSurveyApiService = MockSurveyApiService();
-      surveyRepository = SurveyRepositoryImpl(mockSurveyApiService);
+      mockSurveyStorage = MockSurveyStorage();
+      surveyRepository =
+          SurveyRepositoryImpl(mockSurveyApiService, mockSurveyStorage);
     });
 
     test('when getting surveys is successful returns SurveysContainerModel',
@@ -28,7 +31,7 @@ void main() {
 
       final result =
           await surveyRepository.getSurveys(pageSize: 0, pageNumber: 0);
-      expect(result, surveysResponse.toSurveysContainerModel());
+      expect(result, surveysResponse.toSurveysContainerModel().surveys);
     });
 
     test('when getting surveys fails throws NetworkExceptions', () async {

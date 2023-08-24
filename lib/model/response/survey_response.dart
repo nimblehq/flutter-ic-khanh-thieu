@@ -26,6 +26,9 @@ class SurveyResponse {
         id: id ?? '',
         title: title ?? '',
         description: description ?? '',
-        coverImageUrl: coverImageUrl ?? '',
+        coverImageUrl: highResolutionCoverImageUrl,
       );
+
+  String get highResolutionCoverImageUrl =>
+      (coverImageUrl != null) ? "${coverImageUrl}l" : "";
 }

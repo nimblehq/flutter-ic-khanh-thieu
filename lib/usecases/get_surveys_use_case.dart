@@ -1,7 +1,7 @@
-import 'package:survey_flutter/model/surveys_container_model.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey_flutter/model/survey_model.dart';
 import 'package:survey_flutter/repositories/survey_repository.dart';
-
-import 'base/base_use_case.dart';
+import 'package:survey_flutter/usecases/base/base_use_case.dart';
 
 class SurveysParams {
   final int pageNumber;
@@ -13,13 +13,16 @@ class SurveysParams {
   });
 }
 
-class GetSurveysUseCase extends UseCase<SurveysContainerModel, SurveysParams> {
+final getSurveysUseCaseProvider =
+    Provider((ref) => GetSurveysUseCase(ref.watch(surveyRepositoryProvider)));
+
+class GetSurveysUseCase extends UseCase<List<SurveyModel>, SurveysParams> {
   final SurveyRepository _repository;
 
   const GetSurveysUseCase(this._repository);
 
   @override
-  Future<Result<SurveysContainerModel>> call(SurveysParams params) async {
+  Future<Result<List<SurveyModel>>> call(SurveysParams params) async {
     try {
       final result = await _repository.getSurveys(
           pageNumber: params.pageNumber, pageSize: params.pageSize);

@@ -17,9 +17,8 @@ class SurveysContainerResponse {
     required this.meta,
   });
 
-  factory SurveysContainerResponse.fromJson(Map<String, dynamic> json) {
-    return _$SurveysContainerResponseFromJson(ResponseDecoder.decode(json));
-  }
+  factory SurveysContainerResponse.fromJson(Map<String, dynamic> json) =>
+      _$SurveysContainerResponseFromJson(ResponseDecoder.decode(json));
 
   SurveysContainerModel toSurveysContainerModel() => SurveysContainerModel(
         surveys:
