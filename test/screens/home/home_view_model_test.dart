@@ -41,28 +41,23 @@ void main() {
     });
 
     test(
-      'loads surveys successfully and emits LoadSurveysSuccess state',
+      'loads surveys successfully and emits LoadSurveysSuccess and LoadCacheSurveysSuccess states',
       () async {
         when(mockGetSurveysUseCase.call(any)).thenAnswer(
           (_) async => Success(surveys),
         );
-        final surveysStream = homeViewModel.surveys;
-        homeViewModel.loadSurveys();
-        expect(surveysStream, emitsInOrder([surveys]));
-      },
-    );
-
-    test(
-      'loads cached surveys successfully and emits LoadCachedSurveysSuccess state',
-      () async {
         when(mockGetCachedSurveysUseCase.call())
             .thenAnswer((_) => Future.value(Success(surveys)));
         final surveysStream = homeViewModel.surveys;
         final stateStream = homeViewModel.stream;
-        homeViewModel.loadCachedSurveys();
+        homeViewModel.loadSurveys();
         expect(surveysStream, emitsInOrder([surveys]));
-        expect(stateStream,
-            emitsInOrder([const HomeState.loadCachedSurveysSuccess()]));
+        expect(
+            stateStream,
+            emitsInOrder([
+              const HomeState.loadCachedSurveysSuccess(),
+              const HomeState.loadSurveysSuccess()
+            ]));
       },
     );
 
@@ -70,6 +65,9 @@ void main() {
       'loads surveys with error and emits error state',
       () async {
         when(mockGetSurveysUseCase.call(any)).thenAnswer(
+          (_) async => Failed(exception),
+        );
+        when(mockGetCachedSurveysUseCase.call()).thenAnswer(
           (_) async => Failed(exception),
         );
         final errorStream = homeViewModel.error;

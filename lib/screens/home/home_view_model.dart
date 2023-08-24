@@ -40,6 +40,11 @@ class HomeViewModel extends StateNotifier<HomeState> {
   Stream<String> get error => _error.stream;
 
   void loadSurveys() async {
+    _loadSurveysFromCache();
+    _loadSurveysFromRemote();
+  }
+
+  void _loadSurveysFromRemote() async {
     final result = await _getSurveysUseCase.call(SurveysParams(
       pageNumber: _pageNumber,
       pageSize: _pageSize,
@@ -54,7 +59,7 @@ class HomeViewModel extends StateNotifier<HomeState> {
     }
   }
 
-  void loadCachedSurveys() async {
+  void _loadSurveysFromCache() async {
     final result = await _getCachedSurveysUseCase.call();
     if (result is Success<List<SurveyModel>>) {
       final cachedSurveys =

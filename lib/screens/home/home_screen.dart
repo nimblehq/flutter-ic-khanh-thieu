@@ -34,7 +34,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Future<void> _initData() async {
-    ref.read(homeViewModelProvider.notifier).loadCachedSurveys();
     ref.read(homeViewModelProvider.notifier).loadSurveys();
   }
 
