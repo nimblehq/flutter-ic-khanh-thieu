@@ -42,7 +42,6 @@ class HomePagesWidget extends StatelessWidget {
                 children: [
                   const Spacer(),
                   SafeArea(
-                    bottom: true,
                     child: Padding(
                       padding: const EdgeInsets.only(
                         left: 0,

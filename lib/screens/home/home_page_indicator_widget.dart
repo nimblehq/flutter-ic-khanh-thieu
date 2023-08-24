@@ -22,7 +22,7 @@ class HomePageIndicatorWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
         valueListenable: currentPage,
-        builder: (BuildContext context, int value, Widget? child) {
+        builder: (_, __, ___) {
           return PageViewDotIndicator(
             currentItem: currentPage.value,
             count: surveysLength,

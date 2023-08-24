@@ -81,7 +81,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 220),
                 child: HomePageIndicatorWidget(
-                    surveysLength: surveys.length, currentPage: _currentPage),
+                  surveysLength: surveys.length,
+                  currentPage: _currentPage,
+                ),
               ),
             )
           ],
