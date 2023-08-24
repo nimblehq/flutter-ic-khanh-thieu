@@ -39,8 +39,10 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final _error = StreamController<String>();
   Stream<String> get error => _error.stream;
 
-  void loadSurveys() async {
-    _loadSurveysFromCache();
+  Future<void> loadSurveys({required bool isRefreshing}) async {
+    if (!isRefreshing) {
+      _loadSurveysFromCache();
+    }
     _loadSurveysFromRemote();
   }
 
