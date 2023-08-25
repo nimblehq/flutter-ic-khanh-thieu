@@ -30,27 +30,29 @@ class TokenDataSourceImpl extends TokenDataSource {
 
   @override
   Future<ApiToken> getToken({bool forceRefresh = false}) async {
-    if (forceRefresh) {
-      final tokenResponse = await _authenticationApiService.refreshToken(
-        RefreshTokenRequest(
-          grantType: _grantType,
-          clientId: Env.clientId,
-          clientSecret: Env.clientSecret,
-        ),
-      );
-      final apiToken = tokenResponse.toApiToken();
-      await _secureStorage.save(
-        value: apiToken,
-        key: SecureStorageKey.apiToken,
-      );
-      return apiToken;
-    }
-
-    final token = await _secureStorage.getValue(
+    final currentToken = await _secureStorage.getValue(
       key: SecureStorageKey.apiToken,
       serializer: ApiTokenSerializer(),
     );
-    return token;
+
+    if (!forceRefresh) {
+      return currentToken;
+    }
+
+    final tokenResponse = await _authenticationApiService.refreshToken(
+      RefreshTokenRequest(
+        grantType: _grantType,
+        refreshToken: currentToken.refreshToken,
+        clientId: Env.clientId,
+        clientSecret: Env.clientSecret,
+      ),
+    );
+    final newToken = tokenResponse.toApiToken();
+    await _secureStorage.save(
+      value: newToken,
+      key: SecureStorageKey.apiToken,
+    );
+    return newToken;
   }
 
   @override
