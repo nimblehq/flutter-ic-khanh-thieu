@@ -1,10 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:survey_flutter/storage/secure_storage.dart';
+import 'package:survey_flutter/utils/serializer/serializable.dart';
 
 part 'api_token.g.dart';
 
 @JsonSerializable()
-class ApiToken extends SecureStorageModel {
+class ApiToken extends Serializable {
   @JsonKey(name: 'access_token')
   final String accessToken;
   @JsonKey(name: 'refresh_token')

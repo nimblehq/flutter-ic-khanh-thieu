@@ -19,7 +19,7 @@ class MetaResponse {
   });
 
   factory MetaResponse.fromJson(Map<String, dynamic> json) =>
-      _$MetaResponseFromJson(ResponseDecoder.decode(json));
+      _$MetaResponseFromJson(ResponseDecoder.decodeData(json));
 
   static MetaResponse dummy() {
     return MetaResponse(

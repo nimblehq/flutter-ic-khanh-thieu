@@ -2,16 +2,15 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:survey_flutter/api/exception/network_exceptions.dart';
-import 'package:survey_flutter/model/response/login_response.dart';
+import 'package:survey_flutter/model/response/token_response.dart';
 import 'package:survey_flutter/repositories/authentication_repository.dart';
-import 'package:survey_flutter/storage/secure_storage.dart';
 
 import '../../mocks/generate_mocks.mocks.dart';
 
 void main() {
   group('AuthenticationRepositoryTest', () {
     late MockAuthenticationApiService mockAuthApiService;
-    late MockSecureStorage mockSecureStorage;
+    late MockTokenDataSource mockTokenDataSource;
     late AuthenticationRepositoryImpl authRepository;
 
     const email = "email";
@@ -26,15 +25,15 @@ void main() {
 
     setUp(() {
       mockAuthApiService = MockAuthenticationApiService();
-      mockSecureStorage = MockSecureStorage();
+      mockTokenDataSource = MockTokenDataSource();
       authRepository = AuthenticationRepositoryImpl(
         mockAuthApiService,
-        mockSecureStorage,
+        mockTokenDataSource,
       );
     });
 
     test('When login successfully, it returns correct model', () async {
-      final loginResponse = LoginResponse.dummy();
+      final loginResponse = TokenResponse.dummy();
 
       when(mockAuthApiService.login(any))
           .thenAnswer((_) async => loginResponse);
@@ -44,9 +43,8 @@ void main() {
 
       expect(result, loginResponse.toLoginModel());
       verify(
-        mockSecureStorage.save(
-          value: loginResponse.toApiToken(),
-          key: SecureStorageKey.apiToken,
+        mockTokenDataSource.setToken(
+          loginResponse.toApiToken(),
         ),
       ).called(1);
     });

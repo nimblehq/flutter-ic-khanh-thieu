@@ -3,10 +3,10 @@ import 'package:survey_flutter/api/response_decoder.dart';
 import 'package:survey_flutter/model/api_token.dart';
 import 'package:survey_flutter/model/login_model.dart';
 
-part 'login_response.g.dart';
+part 'token_response.g.dart';
 
 @JsonSerializable()
-class LoginResponse {
+class TokenResponse {
   final String id;
   final String accessToken;
   final String tokenType;
@@ -14,7 +14,7 @@ class LoginResponse {
   final String refreshToken;
   final int createdAt;
 
-  LoginResponse({
+  TokenResponse({
     required this.id,
     required this.accessToken,
     required this.tokenType,
@@ -23,8 +23,8 @@ class LoginResponse {
     required this.createdAt,
   });
 
-  factory LoginResponse.fromJson(Map<String, dynamic> json) =>
-      _$LoginResponseFromJson(ResponseDecoder.decodeData(json));
+  factory TokenResponse.fromJson(Map<String, dynamic> json) =>
+      _$TokenResponseFromJson(ResponseDecoder.decodeData(json));
 
   LoginModel toLoginModel() => LoginModel(
         id: id,
@@ -39,8 +39,8 @@ class LoginResponse {
         tokenType: tokenType,
       );
 
-  static LoginResponse dummy() {
-    return LoginResponse(
+  static TokenResponse dummy() {
+    return TokenResponse(
       id: "",
       accessToken: "",
       tokenType: "",

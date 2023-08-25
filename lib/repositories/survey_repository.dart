@@ -1,9 +1,23 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:survey_flutter/api/data_sources/token_data_source.dart';
 import 'package:survey_flutter/api/exception/network_exceptions.dart';
 import 'package:survey_flutter/api/survey_api_service.dart';
-import 'package:survey_flutter/model/surveys_container_model.dart';
+import 'package:survey_flutter/di/provider/dio_provider.dart';
+import 'package:survey_flutter/model/survey_model.dart';
+import 'package:survey_flutter/storage/survey_storage.dart';
+
+final surveyRepositoryProvider = Provider<SurveyRepository>((ref) {
+  final surveyStorage = ref.watch(surveyStorageProvider);
+  return SurveyRepositoryImpl(
+    SurveyApiService(DioProvider().getAuthorizedDio(
+      tokenDataSource: ref.watch(tokenDataSourceProvider),
+    )),
+    surveyStorage,
+  );
+});
 
 abstract class SurveyRepository {
-  Future<SurveysContainerModel> getSurveys({
+  Future<List<SurveyModel>> getSurveys({
     required int pageNumber,
     required int pageSize,
   });
@@ -11,17 +25,22 @@ abstract class SurveyRepository {
 
 class SurveyRepositoryImpl extends SurveyRepository {
   final SurveyApiService _apiService;
+  final SurveyStorage _surveyStorage;
 
-  SurveyRepositoryImpl(this._apiService);
+  SurveyRepositoryImpl(this._apiService, this._surveyStorage);
 
   @override
-  Future<SurveysContainerModel> getSurveys({
+  Future<List<SurveyModel>> getSurveys({
     required int pageNumber,
     required int pageSize,
   }) async {
     try {
-      final result = await _apiService.getSurveys(pageNumber, pageSize);
-      return result.toSurveysContainerModel();
+      final response = await _apiService.getSurveys(pageNumber, pageSize);
+      final surveys = response.data ?? [];
+      final surveyModels =
+          surveys.map((item) => (item.toSurveyModel())).toList();
+      _surveyStorage.saveSurveys(surveyModels);
+      return surveyModels;
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }
