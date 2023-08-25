@@ -34,7 +34,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   }
 
   Future<void> _initData() async {
-    ref.read(homeViewModelProvider.notifier).loadSurveys();
+    ref.read(homeViewModelProvider.notifier).loadSurveys(isRefreshing: false);
   }
 
   @override
@@ -68,29 +68,42 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       );
     }
     return Scaffold(
-      body: Stack(
-        children: [
-          if (surveys.isNotEmpty) ...[
-            HomePagesWidget(
-              surveys: surveys,
-              currentPage: _currentPage,
-            ),
-            const HomeHeaderWidget(),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 220),
-                child: HomePageIndicatorWidget(
-                  surveysLength: surveys.length,
-                  currentPage: _currentPage,
-                ),
+        backgroundColor: Colors.black,
+        body: RefreshIndicator(
+          color: Colors.white,
+          backgroundColor: Colors.black,
+          onRefresh: () => ref
+              .read(homeViewModelProvider.notifier)
+              .loadSurveys(isRefreshing: true),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Stack(
+                children: [
+                  if (surveys.isNotEmpty) ...[
+                    HomePagesWidget(
+                      surveys: surveys,
+                      currentPage: _currentPage,
+                    ),
+                    const HomeHeaderWidget(),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 220),
+                        child: HomePageIndicatorWidget(
+                          surveysLength: surveys.length,
+                          currentPage: _currentPage,
+                        ),
+                      ),
+                    )
+                  ],
+                  if (surveys.isEmpty || isLoading) _buildShimmerLoading(),
+                ],
               ),
-            )
-          ],
-          if (surveys.isEmpty || isLoading) _buildShimmerLoading(),
-        ],
-      ),
-    );
+            ),
+          ),
+        ));
   }
 
   Widget _buildShimmerLoading() {

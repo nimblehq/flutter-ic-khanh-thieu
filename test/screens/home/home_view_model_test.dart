@@ -50,7 +50,7 @@ void main() {
             .thenAnswer((_) => Future.value(Success(surveys)));
         final surveysStream = homeViewModel.surveys;
         final stateStream = homeViewModel.stream;
-        homeViewModel.loadSurveys();
+        homeViewModel.loadSurveys(isRefreshing: false);
         expect(surveysStream, emitsInOrder([surveys]));
         expect(
             stateStream,
@@ -62,6 +62,17 @@ void main() {
     );
 
     test(
+        'When refreshing surveys successfully and emits a list of surveys with state LoadSurveysSuccess',
+        () {
+      when(mockGetSurveysUseCase.call(any)).thenAnswer(
+        (_) async => Success(surveys),
+      );
+      final surveysStream = homeViewModel.surveys;
+      homeViewModel.loadSurveys(isRefreshing: true);
+      expect(surveysStream, emitsInOrder([surveys]));
+    });
+
+    test(
       'loads surveys with error and emits error state',
       () async {
         when(mockGetSurveysUseCase.call(any)).thenAnswer(
@@ -71,7 +82,7 @@ void main() {
           (_) async => Failed(exception),
         );
         final errorStream = homeViewModel.error;
-        homeViewModel.loadSurveys();
+        homeViewModel.loadSurveys(isRefreshing: false);
         expect(
           errorStream,
           emitsInOrder(
