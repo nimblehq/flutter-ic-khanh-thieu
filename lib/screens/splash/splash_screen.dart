@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
+import 'package:survey_flutter/screens/home/home_screen.dart';
 import 'package:survey_flutter/screens/login/login_screen.dart';
+import 'package:survey_flutter/screens/splash/splash_view_model.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _SplashScreenState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
   double _logoOpacity = 0;
+  bool? _isLoggedIn;
 
   @override
   void initState() {
@@ -26,6 +30,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AsyncValue<bool>>(splashViewModelProvider, (_, next) {
+      next.whenData((result) => _isLoggedIn = result);
+    });
     return Scaffold(
       body: LayoutBuilder(builder: (_, __) {
         return Stack(
@@ -49,7 +56,11 @@ class _SplashScreenState extends State<SplashScreen> {
       duration: const Duration(seconds: 1),
       child: Assets.images.splashLogoWhite.image(),
       onEnd: () {
-        context.go(routePathLoginScreen);
+        if (_isLoggedIn == true) {
+          context.go(routePathHomeScreen);
+        } else if (_isLoggedIn == false) {
+          context.go(routePathLoginScreen);
+        }
       },
     );
   }

@@ -9,6 +9,7 @@ import 'package:survey_flutter/storage/secure_storage.dart';
 import 'package:survey_flutter/storage/survey_storage.dart';
 import 'package:survey_flutter/usecases/get_cached_surveys_use_case.dart';
 import 'package:survey_flutter/usecases/get_surveys_use_case.dart';
+import 'package:survey_flutter/usecases/has_user_logged_in_use_case.dart';
 import 'package:survey_flutter/usecases/login_use_case.dart';
 import 'package:survey_flutter/utils/internet_connection_manager.dart';
 
@@ -19,15 +20,16 @@ import '../utils/async_listener.dart';
   AuthenticationApiService,
   AuthenticationRepository,
   DioError,
+  GetSurveysUseCase,
+  GetCachedSurveysUseCase,
+  HasUserLoggedInUseCase,
   InternetConnectionManager,
   LoginUseCase,
   SecureStorage,
-  SurveyRepository,
   SurveyApiService,
-  TokenDataSource,
   SurveyStorage,
-  GetSurveysUseCase,
-  GetCachedSurveysUseCase,
+  SurveyRepository,
+  TokenDataSource,
 ])
 main() {
   // empty class to generate mock repository classes
