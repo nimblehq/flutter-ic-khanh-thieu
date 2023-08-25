@@ -6,6 +6,7 @@ import 'package:survey_flutter/model/api_token.dart';
 import 'package:survey_flutter/model/request/refresh_token_request.dart';
 import 'package:survey_flutter/storage/secure_storage.dart';
 import 'package:survey_flutter/storage/secure_storage_impl.dart';
+import 'package:survey_flutter/utils/serializer/api_token_serializer.dart';
 
 final tokenDataSourceProvider = Provider<TokenDataSource>((ref) {
   return TokenDataSourceImpl(ref.watch(secureStorageProvider),
@@ -29,24 +30,29 @@ class TokenDataSourceImpl extends TokenDataSource {
 
   @override
   Future<ApiToken> getToken({bool forceRefresh = false}) async {
-    if (forceRefresh) {
-      final tokenResponse = await _authenticationApiService.refreshToken(
-        RefreshTokenRequest(
-          grantType: _grantType,
-          clientId: Env.clientId,
-          clientSecret: Env.clientSecret,
-        ),
-      );
-      final apiToken = tokenResponse.toApiToken();
-      await _secureStorage.save(
-        value: apiToken,
-        key: SecureStorageKey.apiToken,
-      );
-      return apiToken;
+    final currentToken = await _secureStorage.getValue(
+      key: SecureStorageKey.apiToken,
+      serializer: ApiTokenSerializer(),
+    );
+
+    if (!forceRefresh) {
+      return currentToken;
     }
 
-    return await _secureStorage.getValue<ApiToken>(
-        key: SecureStorageKey.apiToken);
+    final tokenResponse = await _authenticationApiService.refreshToken(
+      RefreshTokenRequest(
+        grantType: _grantType,
+        refreshToken: currentToken.refreshToken,
+        clientId: Env.clientId,
+        clientSecret: Env.clientSecret,
+      ),
+    );
+    final newToken = tokenResponse.toApiToken();
+    await _secureStorage.save(
+      value: newToken,
+      key: SecureStorageKey.apiToken,
+    );
+    return newToken;
   }
 
   @override
