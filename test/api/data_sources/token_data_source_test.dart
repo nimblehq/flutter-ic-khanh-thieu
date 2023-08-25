@@ -80,7 +80,7 @@ void main() {
       });
     });
 
-    group('Overwrite token', () {
+    group('Set token', () {
       test(
           'When calling setToken, it calls secureStorage to save the same token',
           () async {

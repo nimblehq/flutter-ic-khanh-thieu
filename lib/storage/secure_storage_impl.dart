@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:survey_flutter/model/api_token.dart';
 import 'package:survey_flutter/storage/secure_storage.dart';
 import 'package:survey_flutter/utils/serializer/serializable.dart';
 
