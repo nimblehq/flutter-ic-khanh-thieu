@@ -25,7 +25,7 @@ class SecureStorageImpl extends SecureStorage {
       throw SecureStorageError.failToGetValue;
     }
     final jsonValue = await jsonDecode(rawValue);
-    return serializer.fromJson(jsonValue);
+    return serializer.serialize(jsonValue);
   }
 
   @override

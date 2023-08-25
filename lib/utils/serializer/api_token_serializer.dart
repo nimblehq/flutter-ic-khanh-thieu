@@ -3,7 +3,7 @@ import 'package:survey_flutter/utils/serializer/serializable.dart';
 
 class ApiTokenSerializer extends Serializer<ApiToken> {
   @override
-  ApiToken fromJson(Map<String, dynamic> json) {
+  ApiToken serialize(Map<String, dynamic> json) {
     return ApiToken.fromJson(json);
   }
 }

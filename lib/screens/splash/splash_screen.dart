@@ -58,7 +58,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       onEnd: () {
         if (_isLoggedIn == true) {
           context.go(routePathHomeScreen);
-        } else if (_isLoggedIn == false) {
+        } else {
           context.go(routePathLoginScreen);
         }
       },

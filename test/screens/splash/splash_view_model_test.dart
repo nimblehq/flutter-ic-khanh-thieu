@@ -3,21 +3,21 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:survey_flutter/screens/splash/splash_view_model.dart';
 import 'package:survey_flutter/usecases/base/base_use_case.dart';
-import 'package:survey_flutter/usecases/has_user_logged_in_use_case.dart';
+import 'package:survey_flutter/usecases/check_user_logged_in_use_case.dart';
 
 import '../../mocks/generate_mocks.mocks.dart';
 
 void main() {
   group('SplashViewModel', () {
     late ProviderContainer container;
-    late MockHasUserLoggedInUseCase mockHasUserLoggedInUseCase;
+    late MockCheckUserLoggedInUseCase mockCheckUserLoggedInUseCase;
 
     setUp(() {
-      mockHasUserLoggedInUseCase = MockHasUserLoggedInUseCase();
+      mockCheckUserLoggedInUseCase = MockCheckUserLoggedInUseCase();
       container = ProviderContainer(
         overrides: [
-          hasUserLoggedInUseCaseProvider
-              .overrideWithValue(mockHasUserLoggedInUseCase),
+          checkUserLoggedInUseCaseProvider
+              .overrideWithValue(mockCheckUserLoggedInUseCase),
         ],
       );
       addTearDown(container.dispose);
@@ -25,7 +25,8 @@ void main() {
 
     test('When hasUserLoggedInUseCase returns success, it returns true',
         () async {
-      when(mockHasUserLoggedInUseCase()).thenAnswer((_) async => Success(true));
+      when(mockCheckUserLoggedInUseCase())
+          .thenAnswer((_) async => Success(true));
 
       // The first read if the loading state
       expect(
@@ -45,7 +46,7 @@ void main() {
 
     test('When hasUserLoggedInUseCase returns failed, it returns false',
         () async {
-      when(mockHasUserLoggedInUseCase())
+      when(mockCheckUserLoggedInUseCase())
           .thenAnswer((_) async => Failed(UseCaseException(Exception())));
 
       // The first read if the loading state
