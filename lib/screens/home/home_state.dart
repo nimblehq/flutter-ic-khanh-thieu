@@ -9,7 +9,8 @@ class HomeState with _$HomeState {
   const factory HomeState.loadCachedSurveysSuccess() =
       _LoadCachedSurveysSuccess;
 
-  const factory HomeState.loadSurveysSuccess() = _LoadSurveysSuccess;
+  const factory HomeState.loadSurveysSuccess(bool isRefreshing) =
+      _LoadSurveysSuccess;
 
   const factory HomeState.error() = _error;
 }

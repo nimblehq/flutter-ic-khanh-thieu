@@ -56,7 +56,7 @@ void main() {
             stateStream,
             emitsInOrder([
               const HomeState.loadCachedSurveysSuccess(),
-              const HomeState.loadSurveysSuccess()
+              const HomeState.loadSurveysSuccess(false),
             ]));
       },
     );

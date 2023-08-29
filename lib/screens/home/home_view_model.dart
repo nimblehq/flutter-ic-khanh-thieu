@@ -7,9 +7,9 @@ import 'package:survey_flutter/usecases/base/base_use_case.dart';
 import 'package:survey_flutter/usecases/get_cached_surveys_use_case.dart';
 import 'package:survey_flutter/usecases/get_surveys_use_case.dart';
 
-// TODO: Integrate load more
-const _pageNumber = 1;
-const _pageSize = 10;
+int _pageNumber = 1;
+const _pageSize = 5;
+List<SurveyModel> _loadedSurveys = [];
 
 final homeViewModelProvider =
     StateNotifierProvider.autoDispose<HomeViewModel, HomeState>((ref) {
@@ -39,25 +39,46 @@ class HomeViewModel extends StateNotifier<HomeState> {
   final _error = StreamController<String>();
   Stream<String> get error => _error.stream;
 
+  void _handleError(Failed result) {
+    var errorMessage = result.getErrorMessage();
+    var isNotFoundError = result.isNotFoundError();
+
+    if (isNotFoundError) {
+      _surveys.add(_loadedSurveys);
+      state = const HomeState.loadSurveysSuccess(false);
+    } else {
+      _error.add(errorMessage);
+      state = const HomeState.error();
+    }
+  }
+
   Future<void> loadSurveys({required bool isRefreshing}) async {
     if (!isRefreshing) {
       _loadSurveysFromCache();
     }
-    _loadSurveysFromRemote();
+    _loadSurveysFromRemote(isRefreshing: isRefreshing);
   }
 
-  void _loadSurveysFromRemote() async {
+  void _loadSurveysFromRemote({required bool isRefreshing}) async {
+    if (isRefreshing) {
+      _loadedSurveys.clear();
+      _pageNumber = 1;
+    }
     final result = await _getSurveysUseCase.call(SurveysParams(
       pageNumber: _pageNumber,
       pageSize: _pageSize,
     ));
+
     if (result is Success<List<SurveyModel>>) {
       final newSurveys = result.value;
-      _surveys.add(newSurveys);
-      state = const HomeState.loadSurveysSuccess();
+      if (newSurveys.isNotEmpty) {
+        _loadedSurveys.addAll(newSurveys);
+        _surveys.add(_loadedSurveys);
+        state = HomeState.loadSurveysSuccess(isRefreshing);
+        _pageNumber++;
+      }
     } else if (result is Failed) {
-      _error.add((result as Failed).getErrorMessage());
-      state = const HomeState.error();
+      _handleError(result as Failed);
     }
   }
 
