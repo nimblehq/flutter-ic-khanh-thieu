@@ -5,12 +5,14 @@ import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/theme/primary_button_style.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
 
-const routePathSurveyScreen = '/survey';
 const _buttonHeight = 56.0;
 
 class SurveyScreen extends StatelessWidget {
   final SurveyModel survey;
-  SurveyScreen({required this.survey, super.key});
+  SurveyScreen({
+    super.key,
+    required this.survey,
+  });
 
   late final _backgroundImage = FadeInImage.assetNetwork(
     placeholder: Assets.images.placeholder.path,
@@ -75,39 +77,35 @@ class SurveyScreen extends StatelessWidget {
         elevation: 0,
       ),
       extendBodyBehindAppBar: true,
-      body: LayoutBuilder(
-        builder: (_, __) {
-          return Stack(
-            children: [
-              _backgroundImage,
-              _gradientOverlay,
-              Container(
-                padding: const EdgeInsets.only(
-                  bottom: Metrics.spacing20,
-                  left: Metrics.spacing20,
-                  right: Metrics.spacing20,
-                ),
-                child: SafeArea(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: Stack(
+        children: [
+          _backgroundImage,
+          _gradientOverlay,
+          Container(
+            padding: const EdgeInsets.only(
+              bottom: Metrics.spacing20,
+              left: Metrics.spacing20,
+              right: Metrics.spacing20,
+            ),
+            child: SafeArea(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTitle(context),
+                  const SizedBox(height: Metrics.spacing16),
+                  _buildDescription(context),
+                  const Spacer(),
+                  Row(
                     children: [
-                      _buildTitle(context),
-                      const SizedBox(height: Metrics.spacing16),
-                      _buildDescription(context),
                       const Spacer(),
-                      Row(
-                        children: [
-                          const Spacer(),
-                          _buildButton(context),
-                        ],
-                      ),
+                      _buildButton(context),
                     ],
                   ),
-                ),
+                ],
               ),
-            ],
-          );
-        },
+            ),
+          ),
+        ],
       ),
     );
   }

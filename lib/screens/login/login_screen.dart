@@ -4,15 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
-import 'package:survey_flutter/screens/home/home_screen.dart';
+import 'package:survey_flutter/screens/app_route.dart';
 import 'package:survey_flutter/screens/login/login_form.dart';
 import 'package:survey_flutter/screens/login/login_view_model.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/uimodels/app_error.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
 import 'package:survey_flutter/widgets/alert_dialog.dart';
-
-const routePathLoginScreen = '/login';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -117,7 +115,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
   _setUpListener(BuildContext context) {
     ref.listen<AsyncValue<void>>(loginViewModelProvider, (_, next) {
       next.maybeWhen(
-        data: (_) => context.go(routePathHomeScreen),
+        data: (_) => context.go(AppRoute.home.path),
         error: (error, _) {
           showAlertDialog(
             context: context,

@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/model/survey_model.dart';
+import 'package:survey_flutter/screens/app_route.dart';
 import 'package:survey_flutter/screens/home/home_screen.dart';
 import 'package:survey_flutter/screens/login/login_screen.dart';
 import 'package:survey_flutter/screens/splash/splash_screen.dart';
@@ -22,29 +23,27 @@ void main() async {
   );
 }
 
-const routePathSplashScreen = '/';
-
 class App extends StatelessWidget {
   App({Key? key}) : super(key: key);
 
   final GoRouter _router = GoRouter(
     routes: <GoRoute>[
       GoRoute(
-        path: routePathSplashScreen,
+        path: AppRoute.splash.path,
         builder: (_, __) => const SplashScreen(),
       ),
       GoRoute(
-        path: routePathLoginScreen,
+        path: AppRoute.login.path,
         pageBuilder: (_, __) => const NoTransitionPage<void>(
           child: LoginScreen(),
         ),
       ),
       GoRoute(
-        path: routePathHomeScreen,
+        path: AppRoute.home.path,
         builder: (_, __) => const HomeScreen(),
       ),
       GoRoute(
-        path: routePathSurveyScreen,
+        path: AppRoute.survey.path,
         builder: (_, state) => SurveyScreen(
           survey: state.extra as SurveyModel,
         ),
