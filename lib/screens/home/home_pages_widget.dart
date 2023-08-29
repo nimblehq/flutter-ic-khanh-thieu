@@ -11,11 +11,13 @@ class HomePagesWidget extends StatelessWidget {
   final List<SurveyModel> surveys;
   final ValueNotifier<int> currentPage;
   final PageController _pageController = PageController();
+  final VoidCallback onNextButtonPressed;
 
   HomePagesWidget({
     Key? key,
     required this.surveys,
     required this.currentPage,
+    required this.onNextButtonPressed,
   }) : super(key: key);
 
   @override
@@ -50,12 +52,7 @@ class HomePagesWidget extends StatelessWidget {
                       ),
                       child: HomeFooterWidget(
                         survey: surveys[index],
-                        onNextButtonPressed: () {
-                          if (currentPage.value < surveys.length - 1) {
-                            currentPage.value = index + 1;
-                            _pageController.jumpToPage(currentPage.value);
-                          }
-                        },
+                        onNextButtonPressed: onNextButtonPressed,
                       ),
                     ),
                   ),

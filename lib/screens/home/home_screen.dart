@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/model/survey_model.dart';
 import 'package:survey_flutter/screens/home/home_header_widget.dart';
-import 'package:survey_flutter/screens/home/home_pages_widget.dart';
 import 'package:survey_flutter/screens/home/home_page_indicator_widget.dart';
+import 'package:survey_flutter/screens/home/home_pages_widget.dart';
 import 'package:survey_flutter/screens/home/home_shimmer_loading.dart';
 import 'package:survey_flutter/screens/home/home_view_model.dart';
+import 'package:survey_flutter/screens/survey/survey_screen.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
 import 'package:survey_flutter/widgets/alert_dialog.dart';
 
@@ -85,6 +87,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     HomePagesWidget(
                       surveys: surveys,
                       currentPage: _currentPage,
+                      onNextButtonPressed: () {
+                        final survey = surveys[_currentPage.value];
+                        context.push(
+                          routePathSurveyScreen,
+                          extra: survey,
+                        );
+                      },
                     ),
                     const HomeHeaderWidget(),
                     Align(

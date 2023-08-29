@@ -3,9 +3,11 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:survey_flutter/model/survey_model.dart';
 import 'package:survey_flutter/screens/home/home_screen.dart';
 import 'package:survey_flutter/screens/login/login_screen.dart';
 import 'package:survey_flutter/screens/splash/splash_screen.dart';
+import 'package:survey_flutter/screens/survey/survey_screen.dart';
 import 'package:survey_flutter/storage/survey_storage.dart';
 import 'package:survey_flutter/theme/app_theme.dart';
 
@@ -40,6 +42,12 @@ class App extends StatelessWidget {
       GoRoute(
         path: routePathHomeScreen,
         builder: (_, __) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: routePathSurveyScreen,
+        builder: (_, state) => SurveyScreen(
+          survey: state.extra as SurveyModel,
+        ),
       ),
     ],
   );
