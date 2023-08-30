@@ -8,7 +8,7 @@ import 'package:survey_flutter/usecases/get_cached_surveys_use_case.dart';
 import 'package:survey_flutter/usecases/get_surveys_use_case.dart';
 
 int _pageNumber = 1;
-const _pageSize = 5;
+const _pageSize = 10;
 List<SurveyModel> _loadedSurveys = [];
 
 final homeViewModelProvider =
@@ -40,14 +40,11 @@ class HomeViewModel extends StateNotifier<HomeState> {
   Stream<String> get error => _error.stream;
 
   void _handleError(Failed result) {
-    var errorMessage = result.getErrorMessage();
-    var isNotFoundError = result.isNotFoundError();
-
-    if (isNotFoundError) {
+    if (result.isNotFoundError()) {
       _surveys.add(_loadedSurveys);
       state = const HomeState.loadSurveysSuccess(false);
     } else {
-      _error.add(errorMessage);
+      _error.add(result.getErrorMessage());
       state = const HomeState.error();
     }
   }

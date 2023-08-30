@@ -100,8 +100,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           extra: survey,
                         );
                       },
-                        onLoadMore: _loadSurveys,
-                        isRefreshing: isRefreshing
+                      onLoadMore: _loadSurveys,
+                      isRefreshing: isRefreshing,
                     ),
                     const HomeHeaderWidget(),
                     Align(

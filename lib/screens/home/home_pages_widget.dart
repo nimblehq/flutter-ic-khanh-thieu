@@ -10,7 +10,6 @@ const _imageOpacity = 0.6;
 class HomePagesWidget extends StatefulWidget {
   final List<SurveyModel> surveys;
   final ValueNotifier<int> currentPage;
-  final PageController _pageController = PageController();
   final VoidCallback onNextButtonPressed;
   final bool isRefreshing;
   final VoidCallback onLoadMore;
@@ -35,13 +34,6 @@ class _HomePagesWidgetState extends State<HomePagesWidget> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
-  }
-
-  void _handleNextButtonPressed(int index) {
-    if (widget.currentPage.value < widget.surveys.length - 1) {
-      widget.currentPage.value = index + 1;
-      _pageController.jumpToPage(widget.currentPage.value);
-    }
   }
 
   void _handlePageChanged(int index) {
