@@ -10,5 +10,6 @@
     "genericError": "Something went wrong.\nPlease try again!",
     "loginFailAlertTitle": "Unable to log in",
     "today": "Today",
-    "errorText": "Error"
+    "errorText": "Error",
+    "startSurveyButton": "Start Survey"
 }
