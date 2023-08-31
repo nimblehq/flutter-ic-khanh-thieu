@@ -11,6 +11,6 @@
     "loginFailAlertTitle": "Unable to log in",
     "today": "Today",
     "errorText": "Error",
-    "startSurveyButton": "Start Survey",
+    "startSurveyText": "Start Survey",
     "submitText": "Submit"
 }

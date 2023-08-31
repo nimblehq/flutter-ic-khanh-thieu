@@ -62,7 +62,7 @@ class SurveyDetailScreen extends StatelessWidget {
           hintTextStyle: context.textTheme.labelMedium,
         ),
         child: Text(
-          context.localizations.startSurveyButton,
+          context.localizations.startSurveyText,
         ),
         onPressed: () {
           // TODO: Pass survey question model

@@ -38,13 +38,13 @@ class SurveyScreen extends StatelessWidget {
           PageView.builder(
             itemCount: _numberOfQuestions,
             controller: _pageController,
-            itemBuilder: (BuildContext context, int index) {
+            itemBuilder: (_, __) {
               return const SurveyQuestionWidget(
                 displayOrder: _displayOrder,
                 numberOfQuestions: _numberOfQuestions,
               );
             },
-            onPageChanged: (int index) {
+            onPageChanged: (_) {
               // TODO: handle in integrate
             },
           ),
@@ -77,8 +77,10 @@ class SurveyScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomButtons(
-      {required bool isNext, required BuildContext context}) {
+  Widget _buildBottomButtons({
+    required bool isNext,
+    required BuildContext context,
+  }) {
     return Align(
       alignment: Alignment.bottomRight,
       child: Padding(
