@@ -33,12 +33,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     _initData();
   }
 
-  Future<void> _initData() async {
+  void _initData() {
     _loadSurveys();
   }
 
   Future<void> _loadSurveys({bool isRefreshing = false}) async {
-    ref.read(homeViewModelProvider.notifier).loadSurveys(isRefreshing: false);
+    ref
+        .read(homeViewModelProvider.notifier)
+        .loadSurveys(isRefreshing: isRefreshing);
   }
 
   @override
