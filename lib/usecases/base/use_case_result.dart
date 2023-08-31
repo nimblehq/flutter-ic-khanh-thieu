@@ -23,4 +23,8 @@ class Failed<T> extends Result<T> {
 
   String getErrorMessage() =>
       NetworkExceptions.getErrorMessage(exception.actualException);
+
+  bool isNotFoundError() =>
+      this.exception.actualException ==
+      const NetworkExceptions.notFound("Not found");
 }

@@ -33,8 +33,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     _initData();
   }
 
-  Future<void> _initData() async {
-    ref.read(homeViewModelProvider.notifier).loadSurveys(isRefreshing: false);
+  void _initData() {
+    _loadSurveys();
+  }
+
+  Future<void> _loadSurveys({bool isRefreshing = false}) async {
+    ref
+        .read(homeViewModelProvider.notifier)
+        .loadSurveys(isRefreshing: isRefreshing);
   }
 
   @override
@@ -43,11 +49,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           loading: () => _buildHomeScreen(isLoading: true),
           error: () => _buildHomeScreen(),
           loadCachedSurveysSuccess: () => _buildHomeScreen(),
-          loadSurveysSuccess: () => _buildHomeScreen(),
+          loadSurveysSuccess: (isRefreshing) =>
+              _buildHomeScreen(isRefreshing: isRefreshing),
         );
   }
 
-  Widget _buildHomeScreen({bool isLoading = false}) {
+  Widget _buildHomeScreen({
+    bool isLoading = false,
+    bool isRefreshing = false,
+  }) {
     final surveys = ref.watch(_surveysStreamProvider).value ?? [];
     final errorMessage = ref.watch(_errorStreamProvider).value ?? "";
 
@@ -92,6 +102,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                           extra: survey,
                         );
                       },
+                      onLoadMore: _loadSurveys,
+                      isRefreshing: isRefreshing,
                     ),
                     const HomeHeaderWidget(),
                     Align(
