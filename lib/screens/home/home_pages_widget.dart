@@ -7,21 +7,51 @@ import '../../gen/assets.gen.dart';
 
 const _imageOpacity = 0.6;
 
-class HomePagesWidget extends StatelessWidget {
+class HomePagesWidget extends StatefulWidget {
   final List<SurveyModel> surveys;
   final ValueNotifier<int> currentPage;
-  final PageController _pageController = PageController();
+  final VoidCallback onNextButtonPressed;
+  final bool isRefreshing;
+  final VoidCallback onLoadMore;
 
-  HomePagesWidget({
+  const HomePagesWidget({
     Key? key,
     required this.surveys,
     required this.currentPage,
+    required this.onNextButtonPressed,
+    required this.onLoadMore,
+    required this.isRefreshing,
   }) : super(key: key);
 
   @override
+  State<HomePagesWidget> createState() => _HomePagesWidgetState();
+}
+
+class _HomePagesWidgetState extends State<HomePagesWidget> {
+  final PageController _pageController = PageController(initialPage: 0);
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _handlePageChanged(int index) {
+    widget.currentPage.value = index;
+
+    if (index == widget.surveys.length - 1) {
+      widget.onLoadMore();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (widget.isRefreshing && widget.surveys.isNotEmpty) {
+      _pageController.jumpToPage(0);
+    }
+
     return PageView.builder(
-      itemCount: surveys.length,
+      itemCount: widget.surveys.length,
       controller: _pageController,
       itemBuilder: (_, int index) {
         return Container(
@@ -32,7 +62,7 @@ class HomePagesWidget extends StatelessWidget {
                 opacity: _imageOpacity,
                 child: FadeInImage.assetNetwork(
                   placeholder: Assets.images.placeholder.path,
-                  image: surveys[index].coverImageUrl,
+                  image: widget.surveys[index].coverImageUrl,
                   fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
@@ -49,13 +79,8 @@ class HomePagesWidget extends StatelessWidget {
                         right: 0,
                       ),
                       child: HomeFooterWidget(
-                        survey: surveys[index],
-                        onNextButtonPressed: () {
-                          if (currentPage.value < surveys.length - 1) {
-                            currentPage.value = index + 1;
-                            _pageController.jumpToPage(currentPage.value);
-                          }
-                        },
+                        survey: widget.surveys[index],
+                        onNextButtonPressed: widget.onNextButtonPressed,
                       ),
                     ),
                   ),
@@ -65,9 +90,7 @@ class HomePagesWidget extends StatelessWidget {
           ),
         );
       },
-      onPageChanged: (int index) {
-        currentPage.value = index;
-      },
+      onPageChanged: _handlePageChanged,
     );
   }
 }

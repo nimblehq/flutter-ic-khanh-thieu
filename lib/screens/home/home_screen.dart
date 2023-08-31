@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/model/survey_model.dart';
+import 'package:survey_flutter/screens/app_route.dart';
 import 'package:survey_flutter/screens/home/home_header_widget.dart';
-import 'package:survey_flutter/screens/home/home_pages_widget.dart';
 import 'package:survey_flutter/screens/home/home_page_indicator_widget.dart';
+import 'package:survey_flutter/screens/home/home_pages_widget.dart';
 import 'package:survey_flutter/screens/home/home_shimmer_loading.dart';
 import 'package:survey_flutter/screens/home/home_view_model.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
 import 'package:survey_flutter/widgets/alert_dialog.dart';
-
-const routePathHomeScreen = '/home';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -33,8 +33,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     _initData();
   }
 
-  Future<void> _initData() async {
-    ref.read(homeViewModelProvider.notifier).loadSurveys(isRefreshing: false);
+  void _initData() {
+    _loadSurveys();
+  }
+
+  Future<void> _loadSurveys({bool isRefreshing = false}) async {
+    ref
+        .read(homeViewModelProvider.notifier)
+        .loadSurveys(isRefreshing: isRefreshing);
   }
 
   @override
@@ -43,11 +49,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           loading: () => _buildHomeScreen(isLoading: true),
           error: () => _buildHomeScreen(),
           loadCachedSurveysSuccess: () => _buildHomeScreen(),
-          loadSurveysSuccess: () => _buildHomeScreen(),
+          loadSurveysSuccess: (isRefreshing) =>
+              _buildHomeScreen(isRefreshing: isRefreshing),
         );
   }
 
-  Widget _buildHomeScreen({bool isLoading = false}) {
+  Widget _buildHomeScreen({
+    bool isLoading = false,
+    bool isRefreshing = false,
+  }) {
     final surveys = ref.watch(_surveysStreamProvider).value ?? [];
     final errorMessage = ref.watch(_errorStreamProvider).value ?? "";
 
@@ -85,6 +95,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     HomePagesWidget(
                       surveys: surveys,
                       currentPage: _currentPage,
+                      onNextButtonPressed: () {
+                        final survey = surveys[_currentPage.value];
+                        context.push(
+                          AppRoute.survey.path,
+                          extra: survey,
+                        );
+                      },
+                      onLoadMore: _loadSurveys,
+                      isRefreshing: isRefreshing,
                     ),
                     const HomeHeaderWidget(),
                     Align(

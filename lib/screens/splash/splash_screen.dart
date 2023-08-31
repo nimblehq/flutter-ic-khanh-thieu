@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
-import 'package:survey_flutter/screens/home/home_screen.dart';
-import 'package:survey_flutter/screens/login/login_screen.dart';
+import 'package:survey_flutter/screens/app_route.dart';
 import 'package:survey_flutter/screens/splash/splash_view_model.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -57,9 +56,9 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       child: Assets.images.splashLogoWhite.image(),
       onEnd: () {
         if (_isLoggedIn == true) {
-          context.go(routePathHomeScreen);
+          context.go(AppRoute.home.path);
         } else {
-          context.go(routePathLoginScreen);
+          context.go(AppRoute.login.path);
         }
       },
     );
