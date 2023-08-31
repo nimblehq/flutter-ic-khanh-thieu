@@ -51,7 +51,7 @@ class App extends StatelessWidget {
       ),
       GoRoute(
         path: AppRoute.questions.path,
-        builder: (_, state) => SurveyScreen(),
+        builder: (_, __) => SurveyScreen(),
       ),
     ],
   );

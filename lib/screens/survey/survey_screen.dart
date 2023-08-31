@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide FormState;
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
 import 'package:survey_flutter/screens/survey/survey_question_widget.dart';
