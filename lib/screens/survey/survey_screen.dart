@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
 import 'package:survey_flutter/screens/survey/survey_question_widget.dart';
@@ -68,9 +69,9 @@ class SurveyScreen extends StatelessWidget {
             shape: BoxShape.circle,
             color: Colors.transparent,
           ),
-          child: Image.asset(
-            Assets.images.closeButton.path,
-            color: Colors.white,
+          child: SvgPicture.asset(
+            Assets.svg.closeButton.path,
+            width: _closeButtonSize,
           ),
         ),
       ),
