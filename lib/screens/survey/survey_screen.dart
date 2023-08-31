@@ -1,111 +1,133 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide FormState;
+import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
-import 'package:survey_flutter/model/survey_model.dart';
+import 'package:survey_flutter/screens/app_route.dart';
+import 'package:survey_flutter/screens/survey/survey_question_widget.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/theme/primary_button_style.dart';
 import 'package:survey_flutter/utils/build_context_ext.dart';
 
-const _buttonHeight = 56.0;
+const _buttonSize = 56.0;
+const _closeButtonSize = 28.0;
+const _paddingButtons = EdgeInsets.only(bottom: 54.0, right: 20.0);
+const _displayOrder = 1;
+const _numberOfQuestions = 5;
 
 class SurveyScreen extends StatelessWidget {
-  final SurveyModel survey;
+  final _pageController = PageController();
+
   SurveyScreen({
-    super.key,
-    required this.survey,
-  });
+    Key? key,
+  }) : super(key: key);
 
-  late final _backgroundImage = FadeInImage.assetNetwork(
-    placeholder: Assets.images.placeholder.path,
-    image: survey.coverImageUrl,
-    fit: BoxFit.cover,
-    width: double.infinity,
-    height: double.infinity,
-  );
-
-  late final _gradientOverlay = Container(
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Colors.black.withOpacity(0.8),
-          Colors.black.withOpacity(0.2),
-          Colors.black.withOpacity(0.8),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(Assets.images.dummyBackground.path),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          PageView.builder(
+            itemCount: _numberOfQuestions,
+            controller: _pageController,
+            itemBuilder: (BuildContext context, int index) {
+              return const SurveyQuestionWidget(
+                displayOrder: _displayOrder,
+                numberOfQuestions: _numberOfQuestions,
+              );
+            },
+            onPageChanged: (int index) {
+              // TODO: handle in integrate
+            },
+          ),
+          _buildCloseButton(context),
+          _buildBottomButtons(isNext: true, context: context),
         ],
       ),
-    ),
-  );
-
-  Widget _buildTitle(BuildContext context) {
-    return Text(
-      survey.title,
-      style: context.textTheme.titleMedium,
-      maxLines: 2,
     );
   }
 
-  Widget _buildDescription(BuildContext context) {
-    return Text(
-      survey.description,
-      style: context.textTheme.bodyMedium,
-      maxLines: 2,
+  Widget _buildCloseButton(BuildContext context) {
+    return Positioned(
+      top: Metrics.spacing54,
+      right: Metrics.spacing16,
+      child: GestureDetector(
+        onTap: () => context.pop(),
+        child: Container(
+          width: _closeButtonSize,
+          height: _closeButtonSize,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.transparent,
+          ),
+          child: Image.asset(
+            Assets.images.closeButton.path,
+            color: Colors.white,
+          ),
+        ),
+      ),
     );
   }
 
-  Widget _buildButton(BuildContext context) {
+  Widget _buildBottomButtons(
+      {required bool isNext, required BuildContext context}) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Padding(
+        padding: _paddingButtons,
+        child: isNext ? _buildNextButton() : _buildSubmitButton(context),
+      ),
+    );
+  }
+
+  void _nextPage() {
+    _pageController.nextPage(
+      duration: const Duration(milliseconds: 100),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  Widget _buildSubmitButton(BuildContext context) {
     return SizedBox(
-      height: _buttonHeight,
+      height: _buttonSize,
       child: ElevatedButton(
         style: PrimaryButtonStyle(
-          hintTextStyle: context.textTheme.labelMedium,
+          hintTextStyle: context.textTheme.labelSmall,
         ),
         child: Text(
-          context.localizations.startSurveyButton,
+          context.localizations.submitText,
         ),
         onPressed: () {
-          // TODO: Start survey
+          // TODO: Submit survey
         },
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
-      extendBodyBehindAppBar: true,
-      body: Stack(
-        children: [
-          _backgroundImage,
-          _gradientOverlay,
-          Container(
-            padding: const EdgeInsets.only(
-              bottom: Metrics.spacing20,
-              left: Metrics.spacing20,
-              right: Metrics.spacing20,
-            ),
-            child: SafeArea(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildTitle(context),
-                  const SizedBox(height: Metrics.spacing16),
-                  _buildDescription(context),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      const Spacer(),
-                      _buildButton(context),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
+  Widget _buildNextButton() {
+    return SizedBox(
+      width: _buttonSize,
+      height: _buttonSize,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          shape: const CircleBorder(),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black12,
+        ),
+        onPressed: _nextPage,
+        child: Image.asset(
+          Assets.images.next.path,
+          color: Colors.black,
+        ),
       ),
     );
   }
