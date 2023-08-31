@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide FormState;
 import 'package:go_router/go_router.dart';
 import 'package:survey_flutter/gen/assets.gen.dart';
-import 'package:survey_flutter/screens/app_route.dart';
 import 'package:survey_flutter/screens/survey/survey_question_widget.dart';
 import 'package:survey_flutter/theme/app_constants.dart';
 import 'package:survey_flutter/theme/primary_button_style.dart';
