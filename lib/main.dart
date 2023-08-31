@@ -8,6 +8,7 @@ import 'package:survey_flutter/screens/app_route.dart';
 import 'package:survey_flutter/screens/home/home_screen.dart';
 import 'package:survey_flutter/screens/login/login_screen.dart';
 import 'package:survey_flutter/screens/splash/splash_screen.dart';
+import 'package:survey_flutter/screens/survey/survey_detail_screen.dart';
 import 'package:survey_flutter/screens/survey/survey_screen.dart';
 import 'package:survey_flutter/storage/survey_storage.dart';
 import 'package:survey_flutter/theme/app_theme.dart';
@@ -44,9 +45,13 @@ class App extends StatelessWidget {
       ),
       GoRoute(
         path: AppRoute.survey.path,
-        builder: (_, state) => SurveyScreen(
+        builder: (_, state) => SurveyDetailScreen(
           survey: state.extra as SurveyModel,
         ),
+      ),
+      GoRoute(
+        path: AppRoute.questions.path,
+        builder: (_, __) => SurveyScreen(),
       ),
     ],
   );

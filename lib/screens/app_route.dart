@@ -3,6 +3,7 @@ enum AppRoute {
   login,
   home,
   survey,
+  questions,
 }
 
 extension AppRoutePath on AppRoute {
@@ -16,6 +17,8 @@ extension AppRoutePath on AppRoute {
         return '/home';
       case AppRoute.survey:
         return '/survey';
+      case AppRoute.questions:
+        return '/questions';
     }
   }
 }
