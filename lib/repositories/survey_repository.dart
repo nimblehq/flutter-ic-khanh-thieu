@@ -3,6 +3,7 @@ import 'package:survey_flutter/api/data_sources/token_data_source.dart';
 import 'package:survey_flutter/api/exception/network_exceptions.dart';
 import 'package:survey_flutter/api/survey_api_service.dart';
 import 'package:survey_flutter/di/provider/dio_provider.dart';
+import 'package:survey_flutter/model/survey_detail_model.dart';
 import 'package:survey_flutter/model/survey_model.dart';
 import 'package:survey_flutter/storage/survey_storage.dart';
 
@@ -21,6 +22,8 @@ abstract class SurveyRepository {
     required int pageNumber,
     required int pageSize,
   });
+
+  Future<SurveyDetailModel> getSurveyDetail(String surveyid);
 }
 
 class SurveyRepositoryImpl extends SurveyRepository {
@@ -41,6 +44,21 @@ class SurveyRepositoryImpl extends SurveyRepository {
           surveys.map((item) => (item.toSurveyModel())).toList();
       _surveyStorage.saveSurveys(surveyModels);
       return surveyModels;
+    } catch (exception) {
+      throw NetworkExceptions.fromDioException(exception);
+    }
+  }
+
+  @override
+  Future<SurveyDetailModel> getSurveyDetail(String surveyid) async {
+    try {
+      final response = await _apiService.getSurveyDetail(surveyid);
+      final surveyDetailResponse = response.surveyDetailResponse;
+      if (surveyDetailResponse == null) {
+        // TODO: Update catching
+        throw const NetworkExceptions.unexpectedError();
+      }
+      return surveyDetailResponse.toSurveyDetailModel();
     } catch (exception) {
       throw NetworkExceptions.fromDioException(exception);
     }
